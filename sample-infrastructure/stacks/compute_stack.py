@@ -53,10 +53,12 @@ class ComputeStack(Stack):
         ec2_oversized = ec2.Instance(
             self,
             "Ec2Oversized",
-            instance_type=ec2.InstanceType("t3.large"),
+            # Free-tier: t3.micro. El hallazgo de CPU baja se detecta igual
+            # (independiente del tamaño). El nombre conserva el intent de la demo.
+            instance_type=ec2.InstanceType("t3.micro"),
             machine_image=amzn_linux,
             vpc=vpc,
-            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
+            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_ISOLATED),
             security_group=sg_web,
             instance_name="ec2-oversized-backend",
             # Sin key pair — no hay acceso SSH (al menos eso)
@@ -77,10 +79,11 @@ class ComputeStack(Stack):
         ec2_stopped = ec2.Instance(
             self,
             "Ec2Stopped",
-            instance_type=ec2.InstanceType("t3.medium"),
+            # Free-tier: t3.micro. El hallazgo de instancia detenida es por estado, no por tamaño.
+            instance_type=ec2.InstanceType("t3.micro"),
             machine_image=amzn_linux,
             vpc=vpc,
-            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
+            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_ISOLATED),
             security_group=sg_web,
             instance_name="ec2-stopped-staging",
         )
@@ -99,7 +102,8 @@ class ComputeStack(Stack):
         ec2_no_tags = ec2.Instance(
             self,
             "Ec2NoTags",
-            instance_type=ec2.InstanceType("t3.small"),
+            # Free-tier: t3.micro. El hallazgo de tags ausentes es independiente del tamaño.
+            instance_type=ec2.InstanceType("t3.micro"),
             machine_image=amzn_linux,
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),

@@ -195,7 +195,7 @@ Edita `infrastructure/cdk.json` con tus valores:
 {
   "app": "python app.py",
   "context": {
-    "account": "748861776779",
+    "account": "123456789012",
     "region": "us-east-1",
     "audit_email": "audit@tuempresa.com",
     "finops_email": "finops@tuempresa.com",
@@ -213,7 +213,7 @@ Edita `infrastructure/cdk.json` con tus valores:
 
 ```bash
 cd infrastructure
-cdk bootstrap aws://748861776779/us-east-1
+cdk bootstrap aws://123456789012/us-east-1
 ```
 
 ### 6. Desplegar

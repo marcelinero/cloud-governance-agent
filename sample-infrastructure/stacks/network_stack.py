@@ -22,10 +22,10 @@ class NetworkStack(Stack):
     Crea la infraestructura de red de muestra con problemas intencionales:
 
     HALLAZGOS ESPERADOS (Security):
-    - [CRITICAL] Security Group 'sg-web-open' con SSH (22) abierto a 0.0.0.0/0
-    - [CRITICAL] Security Group 'sg-db-open' con MySQL (3306) abierto a 0.0.0.0/0
-    - [CRITICAL] Security Group 'sg-db-open' con PostgreSQL (5432) abierto a 0.0.0.0/0
-    - [CRITICAL] Security Group 'sg-db-open' con RDP (3389) abierto a 0.0.0.0/0
+    - [CRITICAL] Security Group 'web-open-sg' con SSH (22) abierto a 0.0.0.0/0
+    - [CRITICAL] Security Group 'db-open-sg' con MySQL (3306) abierto a 0.0.0.0/0
+    - [CRITICAL] Security Group 'db-open-sg' con PostgreSQL (5432) abierto a 0.0.0.0/0
+    - [CRITICAL] Security Group 'db-open-sg' con RDP (3389) abierto a 0.0.0.0/0
     - [MEDIUM]   VPC sin Flow Logs activos
 
     HALLAZGOS ESPERADOS (FinOps):
@@ -44,16 +44,13 @@ class NetworkStack(Stack):
             "SampleVpc",
             ip_addresses=ec2.IpAddresses.cidr("10.0.0.0/16"),
             max_azs=2,
-            nat_gateways=1,
+            # NAT Gateway eliminado (nat_gateways=0) para evitar costo fijo (~$32/mes).
+            # Free-tier friendly: solo subredes públicas e isoladas.
+            nat_gateways=0,
             subnet_configuration=[
                 ec2.SubnetConfiguration(
                     name="Public",
                     subnet_type=ec2.SubnetType.PUBLIC,
-                    cidr_mask=24,
-                ),
-                ec2.SubnetConfiguration(
-                    name="Private",
-                    subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS,
                     cidr_mask=24,
                 ),
                 ec2.SubnetConfiguration(
@@ -80,7 +77,7 @@ class NetworkStack(Stack):
             self,
             "SgWebOpen",
             vpc=self.vpc,
-            security_group_name="sg-web-open",
+            security_group_name="web-open-sg",
             description="SG para servidores web - INSEGURO (demo CGA)",
             allow_all_outbound=True,
         )
@@ -96,7 +93,7 @@ class NetworkStack(Stack):
             "SSH abierto al mundo - INSEGURO",
         )
 
-        Tags.of(self.sg_web).add("Name", "sg-web-open")
+        Tags.of(self.sg_web).add("Name", "web-open-sg")
         Tags.of(self.sg_web).add("Owner", "devops@acme-corp.com")
         Tags.of(self.sg_web).add("Project", "plataforma-core")
         Tags.of(self.sg_web).add("Environment", "production")
@@ -109,7 +106,7 @@ class NetworkStack(Stack):
             self,
             "SgDbOpen",
             vpc=self.vpc,
-            security_group_name="sg-db-open",
+            security_group_name="db-open-sg",
             description="SG para bases de datos - INSEGURO (demo CGA)",
             allow_all_outbound=True,
         )
@@ -139,7 +136,7 @@ class NetworkStack(Stack):
             "MSSQL abierto al mundo - INSEGURO",
         )
 
-        Tags.of(self.sg_db).add("Name", "sg-db-open")
+        Tags.of(self.sg_db).add("Name", "db-open-sg")
         Tags.of(self.sg_db).add("Owner", "dba@acme-corp.com")
         Tags.of(self.sg_db).add("Project", "plataforma-core")
         Tags.of(self.sg_db).add("Environment", "production")

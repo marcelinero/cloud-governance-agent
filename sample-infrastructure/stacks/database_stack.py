@@ -52,8 +52,10 @@ class DatabaseStack(Stack):
             engine=rds.DatabaseInstanceEngine.mysql(
                 version=rds.MysqlEngineVersion.VER_8_0
             ),
+            # Free-tier: db.t3.micro (750h/mes gratis). El hallazgo de acceso
+            # público no depende del tamaño de la instancia.
             instance_type=ec2.InstanceType.of(
-                ec2.InstanceClass.T3, ec2.InstanceSize.MEDIUM
+                ec2.InstanceClass.T3, ec2.InstanceSize.MICRO
             ),
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(
@@ -94,10 +96,11 @@ class DatabaseStack(Stack):
             self,
             "RdsStoppedPostgres",
             engine=rds.DatabaseInstanceEngine.postgres(
-                version=rds.PostgresEngineVersion.VER_15_4
+                version=rds.PostgresEngineVersion.VER_15_7
             ),
+            # Free-tier: db.t3.micro. El hallazgo de sin Multi-AZ no depende del tamaño.
             instance_type=ec2.InstanceType.of(
-                ec2.InstanceClass.T3, ec2.InstanceSize.SMALL
+                ec2.InstanceClass.T3, ec2.InstanceSize.MICRO
             ),
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(

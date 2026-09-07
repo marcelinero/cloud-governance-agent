@@ -44,3 +44,9 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Artefactos temporales de invocación Lambda / despliegue
+response.json
+report-sample.json
+infrastructure/response.json
+infrastructure/report-sample.json

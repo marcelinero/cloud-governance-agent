@@ -111,7 +111,7 @@ cdk --version
 cd sample-infrastructure
 
 # Bootstrap (solo primera vez)
-cdk bootstrap aws://748861776779/us-east-1
+cdk bootstrap aws://123456789012/us-east-1
 
 # Ver los stacks que se van a crear
 cdk list
@@ -151,11 +151,11 @@ A continuación el inventario de todos los problemas intencionales que el CGA de
 
 | # | Dominio | Recurso | Hallazgo | Stack |
 |---|---|---|---|---|
-| 1 | Security | `sg-web-open` | Puerto SSH (22) abierto a 0.0.0.0/0 | Network |
-| 2 | Security | `sg-db-open` | Puerto MySQL (3306) abierto a 0.0.0.0/0 | Network |
-| 3 | Security | `sg-db-open` | Puerto PostgreSQL (5432) abierto a 0.0.0.0/0 | Network |
-| 4 | Security | `sg-db-open` | Puerto RDP (3389) abierto a 0.0.0.0/0 | Network |
-| 5 | Security | `sg-db-open` | Puerto MSSQL (1433) abierto a 0.0.0.0/0 | Network |
+| 1 | Security | `web-open-sg` | Puerto SSH (22) abierto a 0.0.0.0/0 | Network |
+| 2 | Security | `db-open-sg` | Puerto MySQL (3306) abierto a 0.0.0.0/0 | Network |
+| 3 | Security | `db-open-sg` | Puerto PostgreSQL (5432) abierto a 0.0.0.0/0 | Network |
+| 4 | Security | `db-open-sg` | Puerto RDP (3389) abierto a 0.0.0.0/0 | Network |
+| 5 | Security | `db-open-sg` | Puerto MSSQL (1433) abierto a 0.0.0.0/0 | Network |
 | 6 | Security | `iam-user-no-mfa` | Usuario IAM sin MFA habilitado | IAM |
 | 7 | Security | `iam-user-dev-admin` | AdministratorAccess adjunto directamente al usuario | IAM |
 

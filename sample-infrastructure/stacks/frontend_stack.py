@@ -62,9 +62,7 @@ class FrontendStack(Stack):
             "CfNoWaf",
             comment="webapp-principal - SIN WAF - demo CGA",
             default_behavior=cloudfront.BehaviorOptions(
-                origin=origins.S3BucketOrigin.with_origin_access_control(
-                    origin_bucket
-                ),
+                origin=origins.S3Origin(origin_bucket),
                 # Permite HTTP — no fuerza HTTPS — hallazgo MEDIUM
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.ALLOW_ALL,
                 # Sin cache optimizado
@@ -112,9 +110,7 @@ class FrontendStack(Stack):
             "CfAdminNoWaf",
             comment="admin-panel - SIN WAF - demo CGA",
             default_behavior=cloudfront.BehaviorOptions(
-                origin=origins.S3BucketOrigin.with_origin_access_control(
-                    origin_bucket_2
-                ),
+                origin=origins.S3Origin(origin_bucket_2),
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
             ),
             # Sin web_acl_id — sin WAF — hallazgo HIGH

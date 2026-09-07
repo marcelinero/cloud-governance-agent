@@ -11,7 +11,7 @@
     ]
   },
   "context": {
-    "account": "748861776779",
+    "account": "123456789012",
     "region": "us-east-1",
     "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
     "@aws-cdk/core:checkSecretUsage": true,

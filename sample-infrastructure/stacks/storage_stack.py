@@ -49,15 +49,16 @@ class StorageStack(Stack):
             self,
             "BucketPublic",
             bucket_name=None,  # nombre generado automáticamente
-            # Acceso público habilitado — CRÍTICO
+            # Acceso público NO bloqueado — el checker lo detecta via
+            # GetBucketPublicAccessBlock. No usamos public_read_access=True
+            # para evitar que CDK exija una bucket policy pública explícita.
             block_public_access=s3.BlockPublicAccess(
                 block_public_acls=False,
                 block_public_policy=False,
                 ignore_public_acls=False,
                 restrict_public_buckets=False,
             ),
-            public_read_access=True,
-            versioning_enabled=False,
+            versioned=False,
             encryption=s3.BucketEncryption.UNENCRYPTED,  # Sin cifrado
             enforce_ssl=False,                            # Sin HTTPS obligatorio
             removal_policy=RemovalPolicy.DESTROY,
@@ -73,7 +74,7 @@ class StorageStack(Stack):
         bucket_nologs = s3.Bucket(
             self,
             "BucketNoLogs",
-            versioning_enabled=True,
+            versioned=True,
             encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=True,
             removal_policy=RemovalPolicy.DESTROY,
@@ -94,7 +95,7 @@ class StorageStack(Stack):
         bucket_archive = s3.Bucket(
             self,
             "BucketArchive",
-            versioning_enabled=False,
+            versioned=False,
             encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=True,
             removal_policy=RemovalPolicy.DESTROY,
@@ -141,7 +142,7 @@ class StorageStack(Stack):
             self,
             "EbsOrphan",
             availability_zone=f"{self.region}a",
-            size=100,          # 100 GB pagando sin uso
+            size=8,            # Free-tier: 8 GB (el hallazgo de volumen huerfano no depende del tamano)
             volume_type="gp3",
             encrypted=False,   # Sin cifrado — también es un hallazgo de seguridad
             tags=[

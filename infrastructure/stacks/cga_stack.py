@@ -74,7 +74,7 @@ class CGAStack(Stack):
             "CgaLambdaRole",
             role_name="cga-lambda-role",
             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
-            description="Rol IAM para el Cloud Governance Agent — mínimo privilegio",
+            description="Rol IAM para el Cloud Governance Agent - minimo privilegio",
         )
 
         # Permisos de logging (managed policy básica de Lambda)
@@ -287,8 +287,17 @@ class CGAStack(Stack):
             "CgaOrchestrator",
             function_name="cloud-governance-agent",
             runtime=_lambda.Runtime.PYTHON_3_12,
-            handler="handler.lambda_handler",
-            code=_lambda.Code.from_asset("../src"),
+            handler="src.handler.lambda_handler",
+            # Empaqueta desde la raiz del proyecto incluyendo solo el paquete src/,
+            # de modo que "src" sea importable en Lambda y los imports absolutos
+            # (from src.xxx) funcionen igual que en ejecucion local y tests.
+            code=_lambda.Code.from_asset(
+                "..",
+                exclude=[
+                    "*", "!src", "!src/**",
+                    "**/__pycache__", "**/*.pyc",
+                ],
+            ),
             role=lambda_role,
             timeout=Duration.seconds(900),
             memory_size=512,
@@ -305,7 +314,7 @@ class CGAStack(Stack):
                 "KEY_AGE_DAYS_THRESHOLD":  key_age_days,
                 "LOG_LEVEL":               "INFO",
             },
-            description="Cloud Governance Agent — Auditoría continua de seguridad y costos",
+            description="Cloud Governance Agent - Auditoria continua de seguridad y costos",
         )
 
         # ---------------------------------------------------------------
@@ -344,10 +353,14 @@ class CGAStack(Stack):
             display_name="CGA Lambda Alarms",
         )
 
-        if audit_email:
-            alarm_topic.add_subscription(
-                subscriptions.EmailSubscription(audit_email)
-            )
+        # Suscripcion por email a las alarmas. Deshabilitada en modo demo porque
+        # los emails placeholder (@acme-corp.com) no son confirmables y dejan
+        # suscripciones "pending" que complican los rollbacks. Para uso real,
+        # descomentar y usar un email valido (confirmar el correo de suscripcion).
+        # if audit_email and not audit_email.endswith("@acme-corp.com"):
+        #     alarm_topic.add_subscription(
+        #         subscriptions.EmailSubscription(audit_email)
+        #     )
 
         # ---------------------------------------------------------------
         # CloudWatch Alarm — Error en la Lambda
