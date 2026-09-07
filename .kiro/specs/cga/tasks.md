@@ -1,287 +1,146 @@
-# Tareas de Implementación — Cloud Governance Agent (CGA)
+# Implementation Plan: Cloud Governance Agent (CGA)
 
-## Fase 0: Documentación Base ✅ COMPLETADA
+## Overview
 
-> La documentación se crea desde el inicio del proyecto para garantizar trazabilidad completa.
-> Todos los documentos de esta fase ya están creados.
+Plan de implementación del Cloud Governance Agent (CGA), un agente serverless de
+auditoría continua de seguridad, cumplimiento y optimización de costos (FinOps)
+para cuentas AWS. El trabajo se organiza en fases incrementales, cada una validada
+y versionada en Git.
 
-- [x] **TASK-00a** — Crear estructura de carpetas de documentación
-  - `docs/architecture/` — descripciones de componentes
-  - `docs/adr/` — Architecture Decision Records
-  - `docs/diagrams/` — diagramas Mermaid
+Estado global: 35 de 45 tareas completadas (Fases 0-5 + infraestructura de muestra).
+Pendientes: despliegue CDK (Fase 6), tests (Fase 7) y publicación final (Fase 8).
+Checks implementados: 29 (15 seguridad + 14 FinOps) + compliance de tagging en 6 servicios.
 
-- [x] **TASK-00b** — Crear `README.md` principal
-  - Badges de versión, CDK y licencia
-  - Arquitectura ASCII
-  - Tabla de checks por dominio (Seguridad, FinOps, Cumplimiento)
-  - Instrucciones de despliegue paso a paso
-  - Ejemplo de reporte JSON
-  - Tabla de documentación con enlaces
+## Tasks
 
-- [x] **TASK-00c** — Crear documentación de arquitectura
-  - `docs/architecture/overview.md` — diagrama de componentes AWS, descripción de cada componente, consideraciones de seguridad y escalabilidad
+### Fase 0: Documentación Base - COMPLETADA
 
-- [x] **TASK-00d** — Crear diagramas Mermaid
-  - `docs/diagrams/execution-flow.md` — flujo completo de ejecución, manejo de errores, enrutamiento de notificaciones
-  - `docs/diagrams/data-model.md` — diagrama de clases, JSON de ejemplo, reglas de negocio del modelo
+- [x] 1. Crear estructura de carpetas de documentación (docs/architecture, docs/adr, docs/diagrams)
+- [x] 2. Crear README.md principal (badges, arquitectura, tabla de checks, despliegue, ejemplo JSON)
+- [x] 3. Crear docs/architecture/overview.md (componentes AWS, seguridad, escalabilidad)
+- [x] 4. Crear diagramas Mermaid (execution-flow.md, data-model.md)
+- [x] 5. Crear ADRs (001 serverless, 002 CDK Python, 003 checkers modulares)
+- [x] 6. Crear CHANGELOG.md (Keep a Changelog + SemVer)
+- [x] 7. Crear CONTRIBUTING.md (setup, estándares, guía de checkers, tests, PRs)
 
-- [x] **TASK-00e** — Crear Architecture Decision Records (ADR)
-  - `docs/adr/ADR-001-serverless-architecture.md` — Lambda vs EC2 vs Fargate vs Step Functions
-  - `docs/adr/ADR-002-cdk-python.md` — CDK Python vs CloudFormation vs Terraform vs SAM
-  - `docs/adr/ADR-003-modular-checkers.md` — un checker por servicio vs otras alternativas
+### Fase 1: Fundamentos del Proyecto - COMPLETADA (commit 7d21710)
 
-- [x] **TASK-00f** — Crear `CHANGELOG.md`
-  - Formato Keep a Changelog + Semantic Versioning
-  - Versión 0.1.0 con documentación base
-  - Sección Unreleased con pendientes
+- [x] 8. Inicializar proyecto CDK (app.py, cdk.json, requirements.txt, requirements-dev.txt, pytest.ini)
+  - _Requisitos: RNF-04, RNF-05_
+- [x] 9. Implementar src/core/models.py (Finding, ReportSummary, Report con to_dict/from_dict/from_findings)
+  - _Requisitos: RF-03.1_
+- [x] 10. Implementar src/utils/logger.py (JsonFormatter) y src/utils/aws_client.py (factory con retry+cache)
+  - _Requisitos: RNF-03_
 
-- [x] **TASK-00g** — Crear `CONTRIBUTING.md`
-  - Setup del entorno de desarrollo
-  - Estándares de código (PEP8, black, flake8)
-  - Guía paso a paso para agregar un nuevo checker
-  - Estándar de tests con moto
-  - Proceso de Pull Requests y Conventional Commits
+### Fase 2: Checkers de Seguridad - COMPLETADA (commit 3af94f4)
 
----
+- [x] 11. Implementar BaseChecker con _build_finding, _extract_tags, _get_tag, _check_required_tags
+  - _Requisitos: RNF-05_
+- [x] 12. Implementar IAMChecker (MFA, access keys +90d, inactividad 90d, políticas asterisco y AdminAccess)
+  - _Requisitos: RF-01.1_
+- [x] 13. Implementar S3SecurityChecker (acceso público, sin logging, sin cifrado)
+  - _Requisitos: RF-01.2, RF-01.3_
+- [x] 14. Implementar NetworkChecker (SG puertos críticos a 0.0.0.0/0, VPC sin Flow Logs)
+  - _Requisitos: RF-01.2_
+- [x] 15. Implementar RDSSecurityChecker (PubliclyAccessible, sin Multi-AZ en producción)
+  - _Requisitos: RF-01.2_
+- [x] 16. Implementar CloudFrontChecker (sin WAF, HTTP permitido allow-all)
+  - _Requisitos: RF-01.2_
+- [x] 17. Implementar LoggingChecker (CloudTrail deshabilitado, Lambda sin log group/retención)
+  - _Requisitos: RF-01.3_
 
-## Fase 1: Fundamentos del Proyecto
+### Fase 3: Checkers de FinOps - COMPLETADA (commit c2182f8)
 
-- [ ] **TASK-01** — Inicializar el proyecto CDK
-  - Ejecutar `cdk init app --language python` en `/infrastructure`
-  - Configurar `cdk.json` con context: account, region, umbrales
-  - Crear `requirements.txt` con dependencias CDK: `aws-cdk-lib`, `constructs`
-  - Crear `requirements-dev.txt` con: `pytest`, `boto3`, `moto`, `black`, `flake8`
+- [x] 18. Implementar EC2FinOpsChecker (CPU baja 7d, detenidas +N dias, costo EBS)
+  - _Requisitos: RF-02.1, RF-02.5_
+- [x] 19. Implementar StorageChecker (S3 sin lifecycle, EBS huérfano, snapshots huérfanos, AMIs sin uso)
+  - _Requisitos: RF-02.2_
+- [x] 20. Implementar RDSFinOpsChecker (CPU baja 7d, detenidas con aviso auto-restart)
+  - _Requisitos: RF-02.4, RF-02.5_
+- [x] 21. Implementar LambdaFinOpsChecker (sin invocaciones 30d, Provisioned Concurrency sin uso)
+  - _Requisitos: RF-02.1_
+- [x] 22. Implementar NetworkFinOpsChecker (EIPs huérfanas, NAT GW sin tráfico, ALB/NLB sin tráfico)
+  - _Requisitos: RF-02.3_
+- [x] 23. Implementar DynamoDBChecker (tablas inactivas menos de 10 ops/día, PROVISIONED sobredimensionado)
+  - _Requisitos: RF-02.4_
 
-- [ ] **TASK-02** — Crear el modelo de datos central
-  - Implementar `src/core/models.py` con dataclasses `Finding`, `ReportSummary`, `Report`
-  - Definir los literales de severidad: `critical`, `high`, `medium`, `low`
-  - Definir los literales de dominio: `security`, `finops`, `compliance`
+### Fase 4: Checker de Cumplimiento - COMPLETADA (commit 097403e)
 
-- [ ] **TASK-03** — Implementar utilidades base
-  - Implementar `src/utils/logger.py` con logger JSON estructurado usando `logging`
-  - Implementar `src/utils/aws_client.py` como factory de clientes boto3 con retry config
+- [x] 24. Implementar TaggingChecker (tags Owner, Project, Environment, CostCenter en EC2, RDS, S3, Lambda, DynamoDB, CloudFront)
+  - _Requisitos: RF-01.4_
 
----
+### Fase 5: Core — Agregación, Reporte y Notificación - COMPLETADA (commit 097403e)
 
-## Fase 2: Checkers de Seguridad
+- [x] 25. Implementar Aggregator (dedup por resource_id+category+title, orden por severidad, summary)
+  - _Requisitos: RF-03.1_
+- [x] 26. Implementar ReportGenerator (JSON a S3 + HTML con estilos inline, top 5 ahorros, tablas por dominio)
+  - _Requisitos: RF-03.1, RF-03.3_
+- [x] 27. Implementar Notifier (SES routing audit/finops/security/owner, validación email, falla segura sin SES)
+  - _Requisitos: RF-03.2_
+- [x] 28. Implementar handler.py (config env, STS account_id, 13 checkers en ThreadPoolExecutor, métricas CloudWatch)
+  - _Requisitos: RF-04.1, RNF-02, RNF-03_
 
-- [ ] **TASK-04** — Implementar `BaseChecker`
-  - Crear `src/checkers/__init__.py` con clase abstracta `BaseChecker`
-  - Definir interfaz `run() -> List[Finding]`
-  - Implementar método helper `_build_finding()` con generación de UUID
+### Fase 5b: Infraestructura de Muestra (ACME Corp) - COMPLETADA (commit ad0cd1d)
 
-- [ ] **TASK-05** — Implementar `IAMChecker`
-  - Archivo: `src/checkers/security/iam_checker.py`
-  - Check: usuarios sin MFA habilitado
-  - Check: access keys con más de 90 días (configurable por env var)
-  - Check: usuarios sin actividad en 90+ días (usar credential report)
-  - Check: políticas con `*:*` adjuntas directamente a usuarios
+- [x] 29. Implementar network_stack.py (VPC sin Flow Logs, SGs abiertos, EIP huérfana, ALB idle)
+- [x] 30. Implementar compute_stack.py (EC2 subutilizada/detenida/sin tags, 2 Lambdas sin invocaciones)
+- [x] 31. Implementar storage_stack.py (S3 público/sin lifecycle/sin logs, EBS huérfano)
+- [x] 32. Implementar database_stack.py (RDS pública/detenida, DynamoDB inactiva)
+- [x] 33. Implementar iam_stack.py (5 usuarios: sin MFA, key antigua, inactivo, política asterisco, AdminAccess)
+- [x] 34. Implementar frontend_stack.py (2 distribuciones CloudFront sin WAF)
+- [x] 35. Crear app.py + cdk.json + README.md (6 stacks, tabla de 40 hallazgos esperados)
 
-- [ ] **TASK-06** — Implementar `S3SecurityChecker`
-  - Archivo: `src/checkers/security/s3_checker.py`
-  - Check: buckets con acceso público habilitado (`GetBucketPublicAccessBlock`)
-  - Check: buckets sin server access logging
-  - Check: buckets sin etiquetas obligatorias (Owner, Project, Environment, CostCenter)
+### Fase 6: Despliegue de Infraestructura CDK - PENDIENTE
 
-- [ ] **TASK-07** — Implementar `NetworkChecker`
-  - Archivo: `src/checkers/security/network_checker.py`
-  - Check: Security Groups con puertos críticos abiertos a 0.0.0.0/0 (22, 3389, 3306, 5432, 1433, 27017)
-  - Check: Elastic IPs no asociadas (también cuenta para FinOps)
-  - Check: VPCs sin Flow Logs activos
+- [ ] 36. Validar y sintetizar el stack CDK del agente (cdk synth, permisos IAM de 13 checkers, env vars)
+  - _Requisitos: RNF-01_
+- [ ] 37. Desplegar el agente CGA (cdk bootstrap, cdk deploy; verificar Lambda, S3, IAM, EventBridge, alarma, SNS)
+  - _Requisitos: RF-04.2, RNF-01_
+- [ ] 38. Ejecutar el agente end-to-end contra recursos reales y validar contra la tabla de 40 hallazgos
+  - _Requisitos: RF-04.1_
 
-- [ ] **TASK-08** — Implementar `RDSSecurityChecker`
-  - Archivo: `src/checkers/security/rds_checker.py`
-  - Check: instancias RDS con `PubliclyAccessible = True`
-  - Check: instancias RDS sin Multi-AZ en entornos productivos
+### Fase 7: Tests Unitarios - PENDIENTE
 
-- [ ] **TASK-09** — Implementar `CloudFrontChecker`
-  - Archivo: `src/checkers/security/cloudfront_checker.py`
-  - Check: distribuciones sin WAF (WebACL) asociado
-  - Check: distribuciones con HTTP permitido (no forzando HTTPS)
+- [ ] 39. Tests de checkers de seguridad con moto (IAM, S3, Network, RDS): conforme/no-conforme/sin-tags
+  - _Requisitos: RNF-05_
+- [ ] 40. Tests de checkers de FinOps (EC2, Storage, RDS, Network, DynamoDB) con métricas CloudWatch mockeadas
+  - _Requisitos: RNF-05_
+- [ ] 41. Tests de compliance y core (Tagging, Aggregator dedup/orden, ReportGenerator, Notifier routing)
+  - _Requisitos: RNF-05_
 
-- [ ] **TASK-10** — Implementar `LoggingChecker`
-  - Archivo: `src/checkers/security/logging_checker.py`
-  - Check: CloudTrail deshabilitado o no activo en la región
-  - Check: funciones Lambda sin log group en CloudWatch
+### Fase 8: Documentación Final y Publicación - PENDIENTE
 
----
+- [ ] 42. Actualizar README.md con captura/HTML de muestra del reporte real + FAQ
+- [ ] 43. Actualizar CHANGELOG.md a versión 1.0.0
+- [ ] 44. Crear LICENSE (MIT)
+- [ ] 45. Preparar publicación: revisar secrets, GitHub Actions CI, release v1.0.0
 
-## Fase 3: Checkers de FinOps
+## Task Dependency Graph
 
-- [ ] **TASK-11** — Implementar `EC2FinOpsChecker`
-  - Archivo: `src/checkers/finops/ec2_checker.py`
-  - Check: instancias con CPU promedio < 10% en últimos 7 días (CloudWatch Metrics)
-  - Check: instancias en estado `stopped` por más de 7 días
-  - Obtener costo mensual estimado de cada instancia via Cost Explorer
-
-- [ ] **TASK-12** — Implementar `StorageChecker`
-  - Archivo: `src/checkers/finops/storage_checker.py`
-  - Check: buckets S3 sin lifecycle policy configurada
-  - Check: snapshots EBS huérfanos (+30 días sin instancia asociada)
-  - Check: AMIs no utilizadas con más de 90 días
-  - Check: volúmenes EBS en estado `available` por más de 7 días
-
-- [ ] **TASK-13** — Implementar `RDSFinOpsChecker`
-  - Archivo: `src/checkers/finops/rds_checker.py`
-  - Check: instancias RDS con CPU < 10% en últimos 7 días
-  - Check: instancias RDS en estado `stopped` por más de 7 días
-  - Obtener costo mensual estimado via Cost Explorer
-
-- [ ] **TASK-14** — Implementar `LambdaFinOpsChecker`
-  - Archivo: `src/checkers/finops/lambda_checker.py`
-  - Check: funciones Lambda sin invocaciones en los últimos 30 días
-  - Detectar funciones con provisioned concurrency sin uso
-
-- [ ] **TASK-15** — Implementar `NetworkFinOpsChecker`
-  - Archivo: `src/checkers/finops/network_checker.py`
-  - Check: Elastic IPs no asociadas a ningún recurso
-  - Check: NAT Gateways sin tráfico en últimos 7 días (CloudWatch BytesOutToDestination)
-  - Check: Load Balancers (ALB/NLB) sin tráfico en últimos 7 días
-
-- [ ] **TASK-16** — Implementar `DynamoDBChecker`
-  - Archivo: `src/checkers/finops/dynamodb_checker.py`
-  - Check: tablas con menos de 10 operaciones read/write por día en últimos 7 días
-  - Detectar tablas en modo `PROVISIONED` con capacidad sobredimensionada
-
----
-
-## Fase 4: Checker de Cumplimiento
-
-- [ ] **TASK-17** — Implementar `TaggingChecker`
-  - Archivo: `src/checkers/compliance/tagging_checker.py`
-  - Verificar etiquetas obligatorias (`Owner`, `Project`, `Environment`, `CostCenter`) en:
-    EC2, RDS, S3, Lambda, ECS Services, DynamoDB, CloudFront
-  - Severidad `medium` por recurso sin tag obligatorio
-  - Extraer valor del tag `Owner` para routing de notificaciones
-
----
-
-## Fase 5: Core — Agregación, Reporte y Notificación
-
-- [ ] **TASK-18** — Implementar `Aggregator`
-  - Archivo: `src/core/aggregator.py`
-  - Consolidar hallazgos de todos los checkers en una sola lista
-  - Deduplicar por `resource_id + category`
-  - Ordenar por severidad: critical → high → medium → low
-  - Construir `ReportSummary` con totales, ahorro potencial y agrupación por dominio
-  - Agrupar hallazgos por `owner` para routing de notificaciones
-
-- [ ] **TASK-19** — Implementar `ReportGenerator`
-  - Archivo: `src/core/report_generator.py`
-  - Generar `report.json` con estructura completa del `Report`
-  - Generar `report.html` con:
-    - Resumen ejecutivo (totales, ahorro potencial, fecha)
-    - Tabla de hallazgos por dominio con colores por severidad
-    - Sección de top 5 oportunidades de ahorro
-    - Estilos CSS inline para compatibilidad con clientes de email
-  - Subir `report.json` a S3 con path `YYYY/MM/DD/report-{id}.json`
-  - Retornar HTML como string en memoria para adjuntar al email
-
-- [ ] **TASK-20** — Implementar `Notifier`
-  - Archivo: `src/core/notifier.py`
-  - Enviar email a equipo de Auditoría con reporte HTML completo adjunto
-  - Enviar email a equipo FinOps con solo hallazgos de dominio `finops`
-  - Enviar email a equipo de Seguridad con solo hallazgos de dominio `security`
-  - Enviar email al owner de cada recurso (si tag `Owner` es un email válido)
-  - Usar `ses:send_raw_email` con adjunto HTML (MIME multipart)
-
-- [ ] **TASK-21** — Implementar `handler.py` (orquestador Lambda)
-  - Cargar configuración desde variables de entorno
-  - Ejecutar los tres grupos de checkers en paralelo con `ThreadPoolExecutor`
-  - Invocar Aggregator → ReportGenerator → Notifier en secuencia
-  - Registrar métricas de ejecución en CloudWatch (`PutMetricData`)
-  - Retornar resumen JSON con: total_findings, critical, saving_usd, duration_s
-  - Manejar excepciones globales y registrar en CloudWatch
-
----
-
-## Fase 6: Infraestructura CDK
-
-- [ ] **TASK-22** — Implementar `CGAStack` en CDK
-  - Archivo: `infrastructure/stacks/cga_stack.py`
-  - Crear bucket S3 de reportes con SSE-S3, versionado y lifecycle 365 días
-  - Crear rol IAM con permisos mínimos definidos en el diseño
-  - Crear función Lambda con Python 3.12, 512MB, timeout 900s
-  - Pasar todas las variables de entorno a la Lambda desde CDK context
-  - Crear EventBridge Rule con cron `cron(0 8 ? * MON *)` apuntando a la Lambda
-  - Crear Log Group con retención 90 días
-  - Crear alarma CloudWatch por errores de Lambda (threshold: 1 error en 5 min)
-  - Crear SNS Topic para notificaciones de fallo de la Lambda
-
-- [ ] **TASK-23** — Implementar `app.py` CDK entry point
-  - Archivo: `infrastructure/app.py`
-  - Leer account y region desde `cdk.json` context
-  - Instanciar `CGAStack` con parámetros de configuración
-
----
-
-## Fase 7: Tests
-
-- [ ] **TASK-24** — Tests unitarios de checkers de seguridad
-  - Usar `moto` para mockear AWS APIs
-  - Tests para: `IAMChecker`, `S3SecurityChecker`, `NetworkChecker`
-  - Cubrir casos: recurso conforme, recurso no conforme, recurso sin tags
-
-- [ ] **TASK-25** — Tests unitarios de checkers de FinOps
-  - Tests para: `EC2FinOpsChecker`, `StorageChecker`, `RDSFinOpsChecker`
-  - Mockear métricas de CloudWatch con datos de CPU simulados
-
-- [ ] **TASK-26** — Tests unitarios de core
-  - Tests para `Aggregator`: deduplicación, ordenamiento, totales
-  - Tests para `ReportGenerator`: validar estructura JSON, validar HTML no vacío
-  - Tests para `Notifier`: validar llamadas a SES con destinatarios correctos
-
----
-
-## Fase 8: Documentación Final y Publicación
-
-- [ ] **TASK-27** — Actualizar `README.md` con capturas y ejemplos reales
-  - Agregar screenshot o HTML de muestra del reporte generado
-  - Agregar sección de FAQ con preguntas frecuentes
-  - Verificar que todos los enlaces de documentación funcionen
-  - Actualizar badges con estado real del proyecto
-
-- [ ] **TASK-28** — Crear `.gitignore` y preparar repositorio
-  - Ignorar: `cdk.out/`, `__pycache__/`, `.env`, `*.pyc`, `.venv/`, `node_modules/`
-  - Inicializar repositorio git
-  - Crear commit inicial con toda la estructura
-
-- [ ] **TASK-29** — Actualizar `CHANGELOG.md` con versión 1.0.0
-  - Documentar todos los checkers implementados
-  - Documentar la infraestructura CDK
-  - Marcar todos los items de Unreleased como parte de v1.0.0
-
-- [ ] **TASK-30** — Crear `LICENSE` (MIT)
-  - Agregar archivo LICENSE con licencia MIT
-  - Verificar que README referencia correctamente la licencia
-
-- [ ] **TASK-31** — Preparar publicación en GitHub
-  - Revisar que no hay credenciales ni datos sensibles en el código
-  - Agregar GitHub Actions workflow para lint y tests automáticos (`.github/workflows/ci.yml`)
-  - Crear release v1.0.0 en GitHub con notas de release
-
----
-
-## Orden de Implementación Recomendado
-
-```
-TASK-00a..g  (Documentación base — YA COMPLETADA ✅)
-     ↓
-TASK-01 → TASK-02 → TASK-03    (Fundamentos)
-     ↓
-TASK-04 → TASK-05..10          (Checkers Seguridad)
-     ↓
-TASK-11..16                    (Checkers FinOps)
-     ↓
-TASK-17                        (Checker Cumplimiento)
-     ↓
-TASK-18 → TASK-19 → TASK-20 → TASK-21   (Core)
-     ↓
-TASK-22 → TASK-23              (CDK)
-     ↓
-TASK-24..26                    (Tests)
-     ↓
-TASK-27..31                    (Documentación final y publicación)
+```json
+{
+  "waves": [
+    { "wave": 1, "tasks": [1, 2, 3, 4, 5, 6, 7], "description": "Documentación base" },
+    { "wave": 2, "tasks": [8, 9, 10], "description": "Fundamentos: models, utils, CDK init" },
+    { "wave": 3, "tasks": [11], "description": "BaseChecker" },
+    { "wave": 4, "tasks": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], "description": "Checkers seguridad, finops y compliance" },
+    { "wave": 5, "tasks": [25, 26, 27, 28], "description": "Core: aggregator, report, notifier, handler" },
+    { "wave": 6, "tasks": [29, 30, 31, 32, 33, 34, 35], "description": "Infraestructura de muestra (independiente, solo requiere CDK)" },
+    { "wave": 7, "tasks": [36, 37, 38], "description": "Despliegue CDK y validación end-to-end" },
+    { "wave": 8, "tasks": [39, 40, 41], "description": "Tests unitarios (dependen solo del código, usan mocks)" },
+    { "wave": 9, "tasks": [42, 43, 44, 45], "description": "Documentación final y publicación" }
+  ]
+}
 ```
 
-**Total: 38 tareas (7 completadas) | Estimado: 3-4 semanas de desarrollo**
+## Notes
+
+- Cada fase completada fue verificada (imports y pruebas rápidas) y versionada en Git.
+- Fault isolation: un error en un checker individual no detiene la ejecución global del agente.
+- El envío de email por SES se mantiene como capacidad; en modo demo usa placeholders no verificados
+  (@acme-corp.com). El envío falla de forma controlada y el reporte queda igualmente en S3.
+  Para uso real: cambiar emails en cdk.json y verificar el remitente en SES.
+- La infraestructura de muestra genera 40 hallazgos intencionales (~171 USD/mes de ahorro potencial)
+  para validar los checkers contra recursos AWS reales.
+- Las tareas 39-41 (tests) pueden ejecutarse en paralelo al despliegue (36-38) porque usan mocks.
+- Total: 45 tareas | 35 completadas | 10 pendientes.
