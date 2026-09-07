@@ -269,7 +269,7 @@ elasticloadbalancing:DescribeLoadBalancers,
 
 | Variable | Descripción | Ejemplo |
 |---|---|---|
-| `REPORTS_BUCKET` | Nombre del bucket S3 de reportes | `cga-reports-748861776779` |
+| `REPORTS_BUCKET` | Nombre del bucket S3 de reportes | `cga-reports-<account-id>` |
 | `AUDIT_EMAIL` | Email del equipo de auditoría | `audit@empresa.com` |
 | `FINOPS_EMAIL` | Email del equipo FinOps | `finops@empresa.com` |
 | `SECURITY_EMAIL` | Email del equipo de seguridad | `security@empresa.com` |

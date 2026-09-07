@@ -53,7 +53,7 @@ Las contribuciones más valiosas son:
 
 ```bash
 # 1. Fork y clonar el repositorio
-git clone https://github.com/tu-usuario/cloud-governance-agent.git
+git clone https://github.com/marcelinero/cloud-governance-agent.git
 cd cloud-governance-agent
 
 # 2. Crear entorno virtual
@@ -277,7 +277,7 @@ Ejemplo: `feat: add SQS empty queue checker for FinOps domain`
 
 ## Reporte de Bugs
 
-Usa los [GitHub Issues](https://github.com/tu-usuario/cloud-governance-agent/issues) con la siguiente información:
+Usa los [GitHub Issues](https://github.com/marcelinero/cloud-governance-agent/issues) con la siguiente información:
 
 ```markdown
 ## Descripción del bug
@@ -310,4 +310,4 @@ Lo que ocurre actualmente.
 
 ## Preguntas
 
-Para preguntas generales, usa [GitHub Discussions](https://github.com/tu-usuario/cloud-governance-agent/discussions) en lugar de Issues.
+Para preguntas generales, usa [GitHub Discussions](https://github.com/marcelinero/cloud-governance-agent/discussions) en lugar de Issues.

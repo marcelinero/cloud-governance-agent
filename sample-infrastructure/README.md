@@ -42,16 +42,16 @@ La infraestructura simula una empresa de tecnología con los problemas más comu
 │  │  │  (sin tráfico) │  │  (sin tags obligatorios)       │  │   │
 │  │  └────────────────┘  └────────────────────────────────┘  │   │
 │  │                                                           │   │
-│  │  Private Subnets                                          │   │
+│  │  Public Subnets (cont.)                                  │   │
 │  │  ┌────────────────┐  ┌────────────────────────────────┐  │   │
-│  │  │  EC2 oversized │  │  EC2 stopped ⚠️               │  │   │
-│  │  │  CPU 2% ⚠️     │  │  (detenida 15 días)            │  │   │
+│  │  │  EC2 oversized │  │  RDS MySQL ⚠️ (pública)       │  │   │
+│  │  │  CPU 2% ⚠️     │  │                                │  │   │
 │  │  └────────────────┘  └────────────────────────────────┘  │   │
 │  │                                                           │   │
-│  │  Isolated Subnets                                         │   │
+│  │  Isolated Subnets (sin salida a internet, sin NAT GW)     │   │
 │  │  ┌────────────────┐  ┌────────────────────────────────┐  │   │
-│  │  │  RDS MySQL ⚠️  │  │  RDS PostgreSQL ⚠️            │  │   │
-│  │  │  (pública)     │  │  (detenida 15 días)            │  │   │
+│  │  │  EC2 stopped ⚠️│  │  RDS PostgreSQL ⚠️            │  │   │
+│  │  │ (detenida)     │  │  (detenida)                    │  │   │
 │  │  └────────────────┘  └────────────────────────────────┘  │   │
 │  └──────────────────────────────────────────────────────────┘   │
 │                                                                  │
@@ -168,7 +168,7 @@ A continuación el inventario de todos los problemas intencionales que el CGA de
 | 3 | Security | `iam-user-svc-integration` | Access key sin rotación +90 días | IAM |
 | 4 | Security | `iam-user-ex-employee` | Usuario IAM inactivo 90+ días | IAM |
 | 5 | Security | `iam-user-emergency` | Política con permisos `*:*` adjunta al usuario | IAM |
-| 6 | FinOps | `ec2-oversized-backend` | EC2 t3.large con CPU promedio ~2% en 7 días | Compute |
+| 6 | FinOps | `ec2-oversized-backend` | EC2 t3.micro con CPU promedio ~2% en 7 días | Compute |
 | 7 | FinOps | `rds-public-mysql` | RDS con CPU < 10% en 7 días | Database |
 | 8 | FinOps | `rds-stopped-postgres` | RDS detenida por más de 7 días | Database |
 | 9 | FinOps | `alb-idle-demo` | ALB sin tráfico en los últimos 7 días | Network |
@@ -184,7 +184,7 @@ A continuación el inventario de todos los problemas intencionales que el CGA de
 | 4 | Security | `fn-unused-processor` | Lambda sin log group con retención configurada | Compute |
 | 5 | Security | `cf-admin-panel` | CloudFront sin WAF asociado | Frontend |
 | 6 | FinOps | `ec2-stopped-staging` | EC2 en estado stopped por más de 7 días | Compute |
-| 7 | FinOps | `vol-orphan-data` | Volumen EBS de 100 GB sin adjuntar por más de 7 días | Storage |
+| 7 | FinOps | `vol-orphan-data` | Volumen EBS de 8 GB sin adjuntar por más de 7 días | Storage |
 | 8 | FinOps | `bucket-public-demo` | S3 bucket sin lifecycle policy | Storage |
 | 9 | FinOps | `bucket-applogs-demo` | S3 bucket sin lifecycle policy | Storage |
 | 10 | Compliance | `ec2-no-tags` | EC2 sin tag `Owner` | Compute |
@@ -221,17 +221,28 @@ A continuación el inventario de todos los problemas intencionales que el CGA de
 
 ### Ahorro Potencial Estimado (mensual)
 
+> **Nota:** esta infraestructura de muestra usa recursos **free-tier-friendly**
+> (EC2 t3.micro, RDS db.t3.micro, EBS 8 GB, sin NAT Gateway) para minimizar el
+> consumo de créditos AWS. Por eso los montos de ahorro son menores que en un
+> escenario de producción real. El agente detecta los mismos **tipos** de
+> hallazgos independientemente del tamaño del recurso.
+
+Valores reales de la ejecución del CGA sobre esta muestra:
+
 | Recurso | Tipo | Ahorro estimado USD/mes |
 |---|---|---|
-| `ec2-oversized-backend` (t3.large → t3.small) | Rightsizing | ~$45 |
-| `ec2-stopped-staging` (terminar) | Eliminación | ~$30 |
-| `rds-stopped-postgres` (terminar) | Eliminación | ~$25 |
-| `rds-public-mysql` (t3.medium → t3.small) | Rightsizing | ~$35 |
-| `alb-idle-demo` (eliminar) | Eliminación | ~$22 |
-| `vol-orphan-data` 100 GB gp3 (eliminar) | Eliminación | ~$8 |
-| `eip-orphan-demo` (liberar) | Eliminación | ~$4 |
-| `fn-unused-processor` + `fn-legacy-webhook` | Eliminación | ~$2 |
-| **Total potencial** | | **~$171/mes** |
+| `ec2-oversized-backend` (t3.micro subutilizada) | Rightsizing | ~$4.55 |
+| `ec2-no-tags` (t3.micro subutilizada) | Rightsizing | ~$4.55 |
+| `alb-idle-demo` (eliminar) | Eliminación | ~$18.40 |
+| `tbl-inactive-sessions` (DynamoDB → on-demand) | Rightsizing | ~$3.98 |
+| `tbl-inactive-sessions` (tabla inactiva) | Eliminación | ~$4.55 |
+| `eip-orphan-demo` (liberar) | Eliminación | ~$3.65 |
+| `vol-orphan-data` 8 GB gp3 (eliminar) | Eliminación | ~$0.64 |
+| **Total potencial detectado** | | **~$39.68/mes** |
+
+> En un despliegue de producción con instancias reales (t3.large, db.t3.medium,
+> NAT Gateways, volúmenes grandes), el ahorro potencial detectado sería del orden
+> de **$150-200/mes** o más.
 
 ---
 

@@ -172,7 +172,7 @@ cloud-governance-agent/
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/cloud-governance-agent.git
+git clone https://github.com/marcelinero/cloud-governance-agent.git
 cd cloud-governance-agent
 ```
 
