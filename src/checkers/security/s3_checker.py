@@ -38,16 +38,28 @@ class S3SecurityChecker(BaseChecker):
 
             for bucket in buckets:
                 name = bucket["Name"]
+                tags = {}
                 try:
                     tags = self._get_bucket_tags(name)
-                    findings.extend(self._check_public_access(name, tags))
-                    findings.extend(self._check_access_logging(name, tags))
-                    findings.extend(self._check_encryption(name, tags))
                 except Exception as e:
                     self.logger.warning(
-                        "Error auditando bucket",
+                        "Error obteniendo tags del bucket",
                         extra={"bucket": name, "error": str(e)},
                     )
+                # Cada check se aísla para que un fallo en uno no impida los demás
+                # (fault isolation a nivel de check individual).
+                for check in (
+                    self._check_public_access,
+                    self._check_access_logging,
+                    self._check_encryption,
+                ):
+                    try:
+                        findings.extend(check(name, tags))
+                    except Exception as e:
+                        self.logger.warning(
+                            "Error en check S3",
+                            extra={"bucket": name, "check": check.__name__, "error": str(e)},
+                        )
 
         except Exception as e:
             self.logger.error("Error en S3SecurityChecker", extra={"error": str(e)})

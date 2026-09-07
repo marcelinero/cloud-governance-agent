@@ -9,15 +9,67 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
-### Pendiente
-- Implementación de checkers de seguridad (IAM, S3, Network, RDS, CloudFront, Logging)
-- Implementación de checkers de FinOps (EC2, RDS, Lambda, Storage, Network, DynamoDB)
-- Implementación de checker de cumplimiento (Tagging)
-- Core: Aggregator, ReportGenerator, Notifier, Handler
-- Infraestructura CDK
-- Tests unitarios con moto
-- Soporte multi-región (v2)
-- Soporte multi-cuenta via STS AssumeRole (v2)
+### Roadmap
+- Soporte multi-región (auditar todas las regiones habilitadas)
+- Soporte multi-cuenta via STS AssumeRole
+- Integración con AWS Security Hub y AWS Config
+- Análisis de tendencias históricas de hallazgos entre ejecuciones
+- Notificaciones adicionales: Slack, Microsoft Teams, PagerDuty
+
+---
+
+## [1.0.0] — 2026-09-07
+
+Primera versión funcional del Cloud Governance Agent, desplegada y validada
+end-to-end en una cuenta AWS real.
+
+### Added
+
+**Checkers de Seguridad (6 módulos, 15 checks)**
+- `IAMChecker`: MFA ausente, access keys sin rotar +90d, usuarios inactivos, políticas `*:*` y AdministratorAccess directos
+- `S3SecurityChecker`: buckets públicos, sin server access logging, sin cifrado (con fault isolation por check)
+- `NetworkChecker`: Security Groups con puertos críticos abiertos a 0.0.0.0/0, VPCs sin Flow Logs
+- `RDSSecurityChecker`: instancias con acceso público, sin Multi-AZ en producción
+- `CloudFrontChecker`: distribuciones sin WAF, HTTP permitido (allow-all)
+- `LoggingChecker`: CloudTrail deshabilitado, Lambda sin log group/retención
+
+**Checkers de FinOps (6 módulos, 14 checks)**
+- `EC2FinOpsChecker`: CPU baja, instancias detenidas, costo EBS
+- `StorageChecker`: S3 sin lifecycle, EBS huérfano, snapshots huérfanos, AMIs sin uso
+- `RDSFinOpsChecker`: CPU baja, instancias detenidas (con aviso auto-restart AWS)
+- `LambdaFinOpsChecker`: funciones sin invocaciones, Provisioned Concurrency sin uso
+- `NetworkFinOpsChecker`: Elastic IPs huérfanas, NAT Gateways/Load Balancers sin tráfico
+- `DynamoDBChecker`: tablas inactivas, capacidad PROVISIONED sobredimensionada
+
+**Checker de Cumplimiento**
+- `TaggingChecker`: tags obligatorios (Owner, Project, Environment, CostCenter) en EC2, RDS, S3, Lambda, DynamoDB, CloudFront
+
+**Core del agente**
+- `Aggregator`: deduplicación, ordenamiento por severidad, resumen ejecutivo
+- `ReportGenerator`: reporte JSON (a S3) + HTML con estilos inline
+- `Notifier`: routing por rol via Amazon SES (auditoría, FinOps, seguridad, owner)
+- `handler.py`: orquestador Lambda con ejecución paralela (ThreadPoolExecutor) y métricas CloudWatch
+
+**Infraestructura (CDK Python)**
+- Stack del agente: Lambda 3.12, S3 con lifecycle 365d, rol IAM de mínimo privilegio, EventBridge (lunes 08:00 UTC), alarma CloudWatch, SNS topic
+- Infraestructura de muestra (ACME Corp): 6 stacks con 40+ hallazgos intencionales para demostración
+
+**Tests**
+- Suite de 30 tests unitarios con `moto` (29 pasan, 1 skip documentado por limitación de moto)
+- Cobertura de checkers de seguridad, FinOps, compliance y core
+
+**Documentación**
+- README, CHANGELOG, CONTRIBUTING, LICENSE (MIT)
+- Arquitectura, 3 ADRs, diagramas Mermaid, modelo de datos
+- Reporte de ejemplo real en `docs/sample-report/`
+
+### Validado
+- Desplegado en cuenta AWS real (us-east-1)
+- Ejecución end-to-end: **57 hallazgos** detectados (8 critical, 14 high, 31 medium, 4 low)
+- Reporte generado y almacenado en S3, métricas publicadas en CloudWatch
+
+### Notas
+- El envío de email por SES requiere verificar el remitente; en modo demo usa placeholders y falla de forma controlada sin afectar el reporte en S3
 
 ---
 
@@ -57,5 +109,6 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 - **Fixed**: corrección de bugs
 - **Security**: corrección de vulnerabilidades
 
-[Unreleased]: https://github.com/tu-usuario/cloud-governance-agent/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/tu-usuario/cloud-governance-agent/releases/tag/v0.1.0
+[Unreleased]: https://github.com/marcelinero/cloud-governance-agent/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/marcelinero/cloud-governance-agent/releases/tag/v1.0.0
+[0.1.0]: https://github.com/marcelinero/cloud-governance-agent/releases/tag/v0.1.0

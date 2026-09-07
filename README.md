@@ -158,7 +158,12 @@ cloud-governance-agent/
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) configurado con credenciales válidas
 - [AWS CDK v2](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html): `npm install -g aws-cdk`
 - [Node.js 18+](https://nodejs.org/) (requerido por CDK)
-- Cuenta AWS con Amazon SES configurado (emails de destino verificados)
+- Amazon SES con el email remitente verificado (opcional — sin esto el reporte igual se guarda en S3)
+
+> **Nota sobre el AWS Free Tier con "Proyectos" (Blank Canvas):** este nuevo tipo de
+> cuenta aplica Service Control Policies que bloquean CloudFormation, Lambda, EC2 y RDS,
+> impidiendo el despliegue con CDK. Para desplegar este proyecto usa una **cuenta AWS
+> estándar** (que también incluye su propio Free Tier de 12 meses).
 
 ---
 
@@ -249,31 +254,57 @@ Se ejecuta automáticamente todos los **lunes a las 08:00 AM UTC** via EventBrid
 
 ---
 
-## Ejemplo de Reporte
+## Resultados de Ejecución Real
+
+El agente fue desplegado y ejecutado end-to-end en una cuenta AWS real contra la
+infraestructura de muestra (ver [`sample-infrastructure/`](sample-infrastructure/)).
+Reporte completo en [`docs/sample-report/report-example.json`](docs/sample-report/report-example.json).
+
+**Resumen de la ejecución:**
+
+| Severidad | Hallazgos |
+|---|---|
+| 🔴 Critical | 8 |
+| 🟠 High | 14 |
+| 🟡 Medium | 31 |
+| 🔵 Low | 4 |
+| **Total** | **57** |
+
+| Métrica | Valor |
+|---|---|
+| Dominios | Security: 24 · Compliance: 25 · FinOps: 8 |
+| Ahorro potencial estimado | ~$39.68 USD/mes |
+| Costo mensual auditado | ~$48.61 USD/mes |
+| Duración de la ejecución | 6.4 segundos |
 
 ```json
 {
-  "report_id": "cga-2026-09-07-001",
-  "account_id": "748861776779",
-  "account_name": "Mi Cuenta AWS",
-  "generated_at": "2026-09-07T08:05:32Z",
-  "execution_type": "scheduled",
+  "report_id": "f68e29dc-dead-4944-b98c-540036e4040f",
+  "account_id": "123456789012",
+  "account_name": "ACME Corp Production",
+  "generated_at": "2026-09-07T22:00:00Z",
+  "execution_type": "on-demand",
   "summary": {
-    "total_findings": 24,
-    "critical": 3,
-    "high": 8,
-    "medium": 9,
+    "total_findings": 57,
+    "critical": 8,
+    "high": 14,
+    "medium": 31,
     "low": 4,
-    "total_estimated_cost": 1840.50,
-    "total_potential_saving": 612.30,
+    "total_estimated_cost": 48.61,
+    "total_potential_saving": 39.68,
     "findings_by_domain": {
-      "security": 11,
-      "finops": 9,
-      "compliance": 4
+      "compliance": 25,
+      "security": 24,
+      "finops": 8
     }
   }
 }
 ```
+
+> Ejemplos de hallazgos detectados: Security Groups con SSH/RDP/bases de datos
+> abiertos a 0.0.0.0/0, usuarios IAM con AdministratorAccess directo, CloudTrail
+> deshabilitado, EC2 subutilizadas, Elastic IPs huérfanas, DynamoDB sobredimensionada
+> y decenas de recursos sin tags obligatorios.
 
 ---
 
@@ -307,8 +338,10 @@ Se ejecuta automáticamente todos los **lunes a las 08:00 AM UTC** via EventBrid
 | [Arquitectura General](docs/architecture/overview.md) | Descripción detallada de componentes |
 | [Diagrama de Flujo](docs/diagrams/execution-flow.md) | Flujo de ejecución del agente |
 | [Modelo de Datos](docs/diagrams/data-model.md) | Estructura de datos de hallazgos y reportes |
+| [Reporte de Ejemplo](docs/sample-report/report-example.json) | Reporte JSON real generado por el agente |
 | [CHANGELOG](CHANGELOG.md) | Historial de versiones |
 | [CONTRIBUTING](CONTRIBUTING.md) | Guía de contribución |
+| [LICENSE](LICENSE) | Licencia MIT |
 
 ---
 
