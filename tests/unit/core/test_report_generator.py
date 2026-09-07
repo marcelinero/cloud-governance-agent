@@ -46,13 +46,24 @@ def test_html_muestra_resumen_ejecutivo():
     html = gen._generate_html(_report())
     # Debe mostrar el resumen con totales y ahorro
     assert "Resumen Ejecutivo" in html
-    assert "Ahorro Potencial" in html
+    assert "Ahorro potencial" in html
 
 
 def test_html_seccion_top_ahorros_cuando_hay_saving():
     gen = ReportGenerator.__new__(ReportGenerator)
     html = gen._generate_html(_report())
     assert "Top 5 Oportunidades de Ahorro" in html
+
+
+def test_html_incluye_elementos_enriquecidos():
+    """El HTML mejorado debe incluir hero, barra de severidad y sección de servicios."""
+    gen = ReportGenerator.__new__(ReportGenerator)
+    html = gen._generate_html(_report())
+    assert "<style>" in html                      # estilos avanzados para navegador
+    assert 'class="hero"' in html                 # header con gradiente
+    assert "Hallazgos por Servicio" in html       # sección de categorías
+    assert "linear-gradient" in html              # gradiente del hero
+    assert "@media" in html                        # responsive
 
 
 import boto3
