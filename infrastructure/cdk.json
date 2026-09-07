@@ -1,0 +1,35 @@
+{
+  "app": "python app.py",
+  "watch": {
+    "include": ["**"],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "**/__pycache__",
+      "**/*.pyc",
+      ".venv"
+    ]
+  },
+  "context": {
+    "account": "748861776779",
+    "region": "us-east-1",
+    "audit_email": "audit@acme-corp.com",
+    "finops_email": "finops@acme-corp.com",
+    "security_email": "security@acme-corp.com",
+    "ses_sender_email": "cga-noreply@acme-corp.com",
+    "account_name": "ACME Corp Production",
+    "cpu_threshold_percent": "10",
+    "stopped_days_threshold": "7",
+    "key_age_days_threshold": "90",
+    "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/core:target-partitions": ["aws"],
+    "@aws-cdk/aws-iam:minimizePolicies": true,
+    "@aws-cdk/aws-s3:createDefaultLoggingPolicy": true,
+    "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": true,
+    "@aws-cdk/core:enablePartitionLiterals": true,
+    "@aws-cdk/aws-iam:standardizedServicePrincipals": true,
+    "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true,
+    "@aws-cdk/customresources:installLatestAwsSdkDefault": false
+  }
+}
