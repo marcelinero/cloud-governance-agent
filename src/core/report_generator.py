@@ -43,29 +43,42 @@ class ReportGenerator:
         self.s3     = s3_client or boto3.client("s3")
         self.bucket = bucket_name or os.environ.get("REPORTS_BUCKET", "")
 
-    def generate(self, report: Report) -> Tuple[str, str]:
+    def generate(self, report: Report) -> Tuple[str, str, str]:
         """
-        Genera el reporte JSON (sube a S3) y el HTML (retorna como string).
+        Genera el reporte en JSON y HTML, sube ambos a S3 y retorna las claves.
+
+        El nombre de los archivos incluye la fecha y hora de ejecución (UTC) para
+        facilitar la trazabilidad y la identificación cronológica de los reportes:
+            YYYY/MM/DD/cga-report-YYYY-MM-DD_HHMMSS-<id-corto>.{json,html}
 
         Args:
             report: Objeto Report completo con findings y summary.
 
         Returns:
-            Tuple[str, str]: (s3_key del JSON, html_content como string)
+            Tuple[str, str, str]: (s3_key del JSON, s3_key del HTML, html_content)
         """
-        s3_key   = self._upload_json(report)
+        # Nombre base compartido con timestamp legible para trazabilidad
+        dt         = datetime.now(timezone.utc)
+        short_id   = report.report_id[:8]
+        prefix     = f"{dt.year}/{dt.month:02d}/{dt.day:02d}"
+        base_name  = f"cga-report-{dt.strftime('%Y-%m-%d_%H%M%S')}-{short_id}"
+
+        json_key = f"{prefix}/{base_name}.json"
+        html_key = f"{prefix}/{base_name}.html"
+
         html_str = self._generate_html(report)
-        return s3_key, html_str
+
+        self._upload_json(report, json_key)
+        self._upload_html(html_str, html_key)
+
+        return json_key, html_key, html_str
 
     # ------------------------------------------------------------------
     # JSON → S3
     # ------------------------------------------------------------------
-    def _upload_json(self, report: Report) -> str:
+    def _upload_json(self, report: Report, s3_key: str) -> str:
         """Serializa el reporte a JSON y lo sube a S3."""
-        dt     = datetime.now(timezone.utc)
-        s3_key = f"{dt.year}/{dt.month:02d}/{dt.day:02d}/report-{report.report_id}.json"
-        body   = json.dumps(report.to_dict(), ensure_ascii=False, indent=2)
-
+        body = json.dumps(report.to_dict(), ensure_ascii=False, indent=2)
         try:
             self.s3.put_object(
                 Bucket=self.bucket,
@@ -77,8 +90,26 @@ class ReportGenerator:
             logger.info("Reporte JSON subido a S3",
                         extra={"bucket": self.bucket, "key": s3_key})
         except Exception as e:
-            logger.error("Error subiendo reporte a S3", extra={"error": str(e)})
+            logger.error("Error subiendo reporte JSON a S3", extra={"error": str(e)})
+        return s3_key
 
+    # ------------------------------------------------------------------
+    # HTML → S3
+    # ------------------------------------------------------------------
+    def _upload_html(self, html_str: str, s3_key: str) -> str:
+        """Sube el reporte HTML a S3 (visualizable en navegador)."""
+        try:
+            self.s3.put_object(
+                Bucket=self.bucket,
+                Key=s3_key,
+                Body=html_str.encode("utf-8"),
+                ContentType="text/html; charset=utf-8",
+                ServerSideEncryption="AES256",
+            )
+            logger.info("Reporte HTML subido a S3",
+                        extra={"bucket": self.bucket, "key": s3_key})
+        except Exception as e:
+            logger.error("Error subiendo reporte HTML a S3", extra={"error": str(e)})
         return s3_key
 
     # ------------------------------------------------------------------

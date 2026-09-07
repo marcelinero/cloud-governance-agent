@@ -48,7 +48,7 @@ flowchart TD
     N --> O[Genera report.json\ncon evidencias completas]
     N --> P[Genera report.html\ncon estilos inline]
 
-    O --> Q[Upload S3\ncga-reports/YYYY/MM/DD/report-uuid.json]
+    O --> Q[Upload S3 JSON + HTML\ncga-reports/YYYY/MM/DD/cga-report-FECHA_HORA-id.json y .html]
 
     P --> R[Notifier\nEnruta por rol]
 

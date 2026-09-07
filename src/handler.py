@@ -66,6 +66,7 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "potential_saving_usd": float,
             "duration_seconds": float,
             "s3_key": str,
+            "html_s3_key": str,
             "notifications_sent": dict,
           }
     """
@@ -206,11 +207,12 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     # ------------------------------------------------------------------
     # 7. ReportGenerator → JSON a S3 + HTML
     # ------------------------------------------------------------------
-    s3_key    = ""
-    html_body = ""
+    s3_key      = ""
+    html_s3_key = ""
+    html_body   = ""
     try:
         generator = ReportGenerator(bucket_name=bucket_name)
-        s3_key, html_body = generator.generate(report)
+        s3_key, html_s3_key, html_body = generator.generate(report)
     except Exception as e:
         logger.error("Error generando reporte", extra={"error": str(e)})
 
@@ -247,6 +249,7 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         "potential_saving_usd": summary.total_potential_saving,
         "duration_seconds":     round(duration, 2),
         "s3_key":               s3_key,
+        "html_s3_key":          html_s3_key,
         "notifications_sent":   notifications_sent,
         "findings_by_domain":   summary.findings_by_domain,
     }

@@ -53,3 +53,36 @@ def test_html_seccion_top_ahorros_cuando_hay_saving():
     gen = ReportGenerator.__new__(ReportGenerator)
     html = gen._generate_html(_report())
     assert "Top 5 Oportunidades de Ahorro" in html
+
+
+import boto3
+from moto import mock_aws
+
+
+@mock_aws
+def test_generate_sube_json_y_html_a_s3_con_fecha():
+    """generate() debe subir tanto el JSON como el HTML a S3 con nombre fechado."""
+    bucket = "cga-reports-test"
+    s3 = boto3.client("s3", region_name="us-east-1")
+    s3.create_bucket(Bucket=bucket)
+
+    gen = ReportGenerator(s3_client=s3, bucket_name=bucket)
+    json_key, html_key, html_str = gen.generate(_report())
+
+    # Ambas claves incluyen el prefijo de fecha y el nombre cga-report-
+    assert json_key.endswith(".json")
+    assert html_key.endswith(".html")
+    assert "cga-report-" in json_key
+    assert "cga-report-" in html_key
+    # JSON y HTML comparten el mismo nombre base (solo cambia la extensión)
+    assert json_key[:-5] == html_key[:-5]
+
+    # Los objetos existen en S3 con el content-type correcto
+    objs = s3.list_objects_v2(Bucket=bucket)["Contents"]
+    keys = {o["Key"] for o in objs}
+    assert json_key in keys
+    assert html_key in keys
+
+    html_obj = s3.get_object(Bucket=bucket, Key=html_key)
+    assert html_obj["ContentType"].startswith("text/html")
+    assert "ACME Corp" in html_str

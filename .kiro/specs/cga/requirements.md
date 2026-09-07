@@ -74,7 +74,9 @@
 - Las notificaciones DEBEN enviarse vía Amazon SES
 
 #### RF-03.3 Almacenamiento de Evidencias
-- El agente DEBE almacenar cada reporte en S3 con la estructura: `s3://cga-reports-{account-id}/YYYY/MM/DD/report.json`
+- El agente DEBE almacenar cada reporte en S3 en formato JSON y HTML con la estructura:
+  `s3://cga-reports-{account-id}/YYYY/MM/DD/cga-report-{fecha}_{hora}-{id}.{json,html}`
+  (el nombre incluye fecha y hora de ejecución UTC para trazabilidad e identificación)
 - Los reportes DEBEN ser retenidos por 365 días mediante lifecycle policy
 
 ---
