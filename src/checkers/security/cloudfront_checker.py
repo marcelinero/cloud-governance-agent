@@ -4,6 +4,10 @@ cloudfront_checker.py — Auditoría de seguridad de Amazon CloudFront.
 Checks implementados:
   - [HIGH]   Distribuciones sin WebACL (WAF) asociado
   - [MEDIUM] Distribuciones que permiten HTTP (no fuerzan HTTPS)
+
+Nota: nombres de AWS Managed Rules (AWSManagedRulesCommonRuleSet,
+AWSManagedRulesBotControlRuleSet) validados vigentes contra la documentación
+oficial de AWS WAF.
 """
 
 from __future__ import annotations

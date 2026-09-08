@@ -9,6 +9,23 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Removed
+- `S3SecurityChecker`: se eliminó el check de "bucket sin cifrado en reposo". Desde el
+  5-ene-2023 AWS aplica SSE-S3 (AES-256) por defecto a todos los buckets, por lo que la
+  ausencia de cifrado dejó de ser un estado posible y el check nunca disparaba. No se
+  reemplaza por un check de SSE-S3 vs SSE-KMS porque esa decisión depende de la
+  clasificación de datos y las políticas de cada cliente/ambiente, y no aplica como
+  regla general.
+  ([Default encryption FAQ](https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-encryption-faq.html))
+- `S3SecurityChecker`: la recomendación de Block Public Access ahora menciona que AWS
+  activa BPA y deshabilita ACLs por defecto en buckets nuevos desde abr-2023, y sugiere
+  Object Ownership = `Bucket owner enforced`.
+- `IAMChecker`: recomendaciones de MFA y access keys modernizadas para sugerir
+  IAM Identity Center (acceso humano) y credenciales temporales (roles, IAM Roles Anywhere).
+
+### Notas
+- Ajustes validados contra la documentación oficial de AWS mediante el servidor MCP de AWS.
+
 ### Roadmap
 - Soporte multi-región (auditar todas las regiones habilitadas)
 - Soporte multi-cuenta via STS AssumeRole
@@ -27,7 +44,7 @@ end-to-end en una cuenta AWS real.
 
 **Checkers de Seguridad (6 módulos, 15 checks)**
 - `IAMChecker`: MFA ausente, access keys sin rotar +90d, usuarios inactivos, políticas `*:*` y AdministratorAccess directos
-- `S3SecurityChecker`: buckets públicos, sin server access logging, sin cifrado (con fault isolation por check)
+- `S3SecurityChecker`: buckets públicos, sin server access logging (con fault isolation por check)
 - `NetworkChecker`: Security Groups con puertos críticos abiertos a 0.0.0.0/0, VPCs sin Flow Logs
 - `RDSSecurityChecker`: instancias con acceso público, sin Multi-AZ en producción
 - `CloudFrontChecker`: distribuciones sin WAF, HTTP permitido (allow-all)

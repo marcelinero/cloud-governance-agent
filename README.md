@@ -70,6 +70,7 @@ Para diagramas detallados ver [`docs/architecture/`](docs/architecture/).
 | Access keys sin rotación +90 días | High |
 | Security Groups con puertos críticos abiertos (22, 3389, 3306…) | Critical |
 | Buckets S3 con acceso público | Critical |
+| Buckets S3 sin server access logging | Medium |
 | Distribuciones CloudFront sin WAF | High |
 | Instancias RDS con acceso público | High |
 | VPCs sin Flow Logs | Medium |

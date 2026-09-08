@@ -106,8 +106,11 @@ class IAMChecker(BaseChecker):
                         ),
                         recommendation=(
                             "Habilitar MFA inmediatamente: IAM → Users → "
-                            f"{username} → Security credentials → Assign MFA device. "
-                            "Considerar uso de MFA virtual (Google Authenticator) o hardware (YubiKey)."
+                            f"{username} → Security credentials → Assign MFA device "
+                            "(FIDO passkey/llave de seguridad, app autenticadora o TOTP). "
+                            "Como práctica moderna, AWS recomienda gestionar el acceso humano "
+                            "con IAM Identity Center (SSO) en lugar de usuarios IAM de larga "
+                            "duración, lo que centraliza MFA y credenciales temporales."
                         ),
                         owner=self._get_tag(tags, "owner"),
                         project=self._get_tag(tags, "project"),
@@ -171,7 +174,11 @@ class IAMChecker(BaseChecker):
                                 recommendation=(
                                     f"Rotar la access key: crear una nueva key, actualizar "
                                     f"las aplicaciones que la usan, y desactivar/eliminar la antigua. "
-                                    f"Política recomendada: rotación cada {self.key_age_threshold} días."
+                                    f"Política recomendada: rotación cada {self.key_age_threshold} días. "
+                                    f"Mejor aún, eliminar las claves de larga duración y usar "
+                                    f"credenciales temporales: roles IAM (AssumeRole) para cargas de "
+                                    f"trabajo, IAM Roles Anywhere para on-premises, o IAM Identity "
+                                    f"Center para acceso humano."
                                 ),
                                 owner=self._get_tag(tags, "owner"),
                                 project=self._get_tag(tags, "project"),

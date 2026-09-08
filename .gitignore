@@ -32,6 +32,9 @@ node_modules/
 *.swp
 *.swo
 
+# Kiro — configuración local de MCP (puede contener rutas/tokens)
+.kiro/settings/mcp.json
+
 # Tests
 .pytest_cache/
 .coverage

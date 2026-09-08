@@ -4,7 +4,14 @@ s3_checker.py — Auditoría de seguridad de Amazon S3.
 Checks implementados:
   - [CRITICAL] Buckets con acceso público habilitado
   - [MEDIUM]   Buckets sin server access logging
-  - [MEDIUM]   Buckets sin cifrado habilitado
+
+Nota (actualizado vía documentación oficial AWS):
+  Desde el 5-ene-2023 Amazon S3 aplica SSE-S3 (AES-256) por defecto a TODOS los
+  buckets, incluidos los existentes que no tenían cifrado configurado, por lo que
+  "bucket sin cifrado en reposo" dejó de ser un estado posible y no se audita.
+  La elección entre SSE-S3 y SSE-KMS depende de la clasificación de datos y las
+  políticas de cada cliente/ambiente, por lo que NO se incluye como regla general.
+  Ref: https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-encryption-faq.html
 """
 
 from __future__ import annotations
@@ -51,7 +58,6 @@ class S3SecurityChecker(BaseChecker):
                 for check in (
                     self._check_public_access,
                     self._check_access_logging,
-                    self._check_encryption,
                 ):
                     try:
                         findings.extend(check(name, tags))
@@ -108,6 +114,10 @@ class S3SecurityChecker(BaseChecker):
                         recommendation=(
                             f"Habilitar 'Block all public access' en el bucket '{bucket_name}': "
                             f"S3 → {bucket_name} → Permissions → Block public access → Edit. "
+                            f"AWS activa esta configuración por defecto en buckets nuevos desde "
+                            f"abr-2023, por lo que este bucket fue modificado o es anterior. "
+                            f"Además, deshabilitar los ACLs con Object Ownership = "
+                            f"'Bucket owner enforced' y conceder acceso solo vía bucket policy. "
                             f"Verificar que ningún objeto requiera acceso público antes de aplicar."
                         ),
                         owner=self._get_tag(tags, "owner"),
@@ -193,51 +203,6 @@ class S3SecurityChecker(BaseChecker):
         except Exception as e:
             self.logger.warning(
                 "Error verificando logging S3",
-                extra={"bucket": bucket_name, "error": str(e)},
-            )
-
-        return findings
-
-    # ------------------------------------------------------------------
-    # Check 3: Cifrado deshabilitado
-    # ------------------------------------------------------------------
-    def _check_encryption(self, bucket_name: str, tags: Dict[str, str]) -> List[Finding]:
-        findings = []
-        try:
-            self.s3.get_bucket_encryption(Bucket=bucket_name)
-            # Si no lanza excepción, el cifrado está configurado
-        except ClientError as e:
-            if e.response["Error"]["Code"] == "ServerSideEncryptionConfigurationNotFoundError":
-                findings.append(
-                    self._build_finding(
-                        domain="security",
-                        category="s3",
-                        severity="medium",
-                        resource_id=f"arn:aws:s3:::{bucket_name}",
-                        resource_type="AWS::S3::Bucket",
-                        region="global",
-                        title=f"Bucket S3 sin cifrado en reposo: {bucket_name}",
-                        description=(
-                            f"El bucket '{bucket_name}' no tiene configuración de "
-                            f"cifrado por defecto (SSE). Los objetos almacenados no "
-                            f"están cifrados en reposo, lo que representa un riesgo "
-                            f"si el almacenamiento físico es comprometido."
-                        ),
-                        recommendation=(
-                            f"Habilitar cifrado por defecto en '{bucket_name}': "
-                            f"S3 → {bucket_name} → Properties → Default encryption → Edit. "
-                            f"Usar SSE-S3 (gratis) o SSE-KMS para control adicional."
-                        ),
-                        owner=self._get_tag(tags, "owner"),
-                        project=self._get_tag(tags, "project"),
-                        environment=self._get_tag(tags, "environment"),
-                        cost_center=self._get_tag(tags, "costcenter"),
-                        evidence={"bucket_name": bucket_name, "encryption": "not_configured"},
-                    )
-                )
-        except Exception as e:
-            self.logger.warning(
-                "Error verificando cifrado S3",
                 extra={"bucket": bucket_name, "error": str(e)},
             )
 
