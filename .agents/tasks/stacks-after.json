@@ -1,0 +1,90 @@
+{
+  "StackSummaries": [
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CloudGovernanceAgent/1627d2c0-ab09-11f1-9d74-12feaf0de711",
+      "StackName": "CloudGovernanceAgent",
+      "TemplateDescription": "Cloud Governance Agent – Auditoría continua, seguridad y FinOps para AWS",
+      "CreationTime": "2026-09-07T22:11:34.254000+00:00",
+      "LastUpdatedTime": "2026-09-07T23:36:29.577000+00:00",
+      "StackStatus": "UPDATE_COMPLETE",
+      "DriftInformation": { "StackDriftStatus": "NOT_CHECKED" },
+      "LastOperations": [{ "OperationType": "UPDATE_STACK", "OperationId": "22853d72-724a-4c1a-a0db-b3d25ea7f7d4" }]
+    },
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CDKToolkit/a8c1fb60-ab04-11f1-ac40-0affc26851bd",
+      "StackName": "CDKToolkit",
+      "TemplateDescription": "This stack includes resources needed to deploy AWS CDK apps into this environment",
+      "CreationTime": "2026-09-07T21:39:52.614000+00:00",
+      "LastUpdatedTime": "2026-09-07T21:39:58.799000+00:00",
+      "StackStatus": "CREATE_COMPLETE",
+      "DriftInformation": { "StackDriftStatus": "NOT_CHECKED" },
+      "LastOperations": [{ "OperationType": "CREATE_STACK", "OperationId": "5e36e60b-8efa-408a-ad7f-55d7939fdc64" }]
+    },
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+      "StackName": "CGA-Sample-Compute",
+      "TemplateDescription": "[CGA Demo] Compute: EC2 subutilizada/detenida, Lambda sin invocaciones",
+      "CreationTime": "2026-09-07T22:05:11.262000+00:00",
+      "DeletionTime": "2026-10-08T15:45:21.718000+00:00",
+      "StackStatus": "DELETE_COMPLETE",
+      "DriftInformation": { "StackDriftStatus": "NOT_CHECKED" },
+      "LastOperations": [{ "OperationType": "DELETE_STACK", "OperationId": "b0d9d590-de4d-4151-b315-136f17d3a5b3" }]
+    },
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+      "StackName": "CGA-Sample-Database",
+      "TemplateDescription": "[CGA Demo] Database: RDS publica/detenida, DynamoDB inactiva",
+      "CreationTime": "2026-09-07T21:57:30.962000+00:00",
+      "DeletionTime": "2026-10-08T15:46:35.850000+00:00",
+      "StackStatus": "DELETE_COMPLETE",
+      "DriftInformation": { "StackDriftStatus": "NOT_CHECKED" },
+      "LastOperations": [{ "OperationType": "DELETE_STACK", "OperationId": "a9241fba-a7b1-44f0-925e-fc93fbf47532" }]
+    },
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+      "StackName": "CGA-Sample-Storage",
+      "TemplateDescription": "[CGA Demo] Storage: S3 publico, sin lifecycle, EBS huerfano",
+      "CreationTime": "2026-09-07T21:54:02.049000+00:00",
+      "DeletionTime": "2026-10-08T15:54:41.659000+00:00",
+      "StackStatus": "DELETE_COMPLETE",
+      "DriftInformation": { "StackDriftStatus": "NOT_CHECKED" },
+      "LastOperations": [{ "OperationType": "DELETE_STACK", "OperationId": "ccedcc23-ba89-474b-a97c-7d79c522e9c5" }]
+    },
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Network/2869eca0-ab06-11f1-93b7-0e400b3328f7",
+      "StackName": "CGA-Sample-Network",
+      "TemplateDescription": "[CGA Demo] Red: VPC, Security Groups inseguros, EIP huerfana, ALB inactivo",
+      "CreationTime": "2026-09-07T21:50:36.393000+00:00",
+      "DeletionTime": "2026-10-08T15:55:24.998000+00:00",
+      "StackStatus": "DELETE_COMPLETE",
+      "DriftInformation": { "StackDriftStatus": "NOT_CHECKED" },
+      "LastOperations": [{ "OperationType": "DELETE_STACK", "OperationId": "1db1f3c9-4b08-45e3-8cec-ae68fd77ff6c" }]
+    },
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Frontend/b6b1ae40-ab05-11f1-96bf-0e8283057ca7",
+      "StackName": "CGA-Sample-Frontend",
+      "TemplateDescription": "[CGA Demo] Frontend: CloudFront sin WAF, HTTP permitido",
+      "CreationTime": "2026-09-07T21:47:25.597000+00:00",
+      "DeletionTime": "2026-10-08T15:53:59.293000+00:00",
+      "StackStatus": "DELETE_COMPLETE",
+      "DriftInformation": { "StackDriftStatus": "NOT_CHECKED" },
+      "LastOperations": [{ "OperationType": "DELETE_STACK", "OperationId": "b03dc7e5-9dd1-4771-b1bc-f2e036892eca" }]
+    },
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+      "StackName": "CGA-Sample-IAM",
+      "TemplateDescription": "[CGA Demo] IAM: usuarios sin MFA, keys antiguas, politicas permisivas",
+      "CreationTime": "2026-09-07T21:41:22.955000+00:00",
+      "DeletionTime": "2026-10-08T15:57:08.216000+00:00",
+      "StackStatus": "DELETE_COMPLETE",
+      "DriftInformation": { "StackDriftStatus": "NOT_CHECKED" },
+      "LastOperations": [{ "OperationType": "DELETE_STACK", "OperationId": "4dc40bbe-4ad6-4ba2-a9dc-add2caabf062" }]
+    }
+  ],
+  "_metadata": {
+    "captured_at": "2026-10-08T16:00:00Z",
+    "region": "us-east-1",
+    "account": "062560094883",
+    "note": "Snapshot post-eliminacion de stacks demo CGA"
+  }
+}

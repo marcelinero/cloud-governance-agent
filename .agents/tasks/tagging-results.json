@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-10-08T11:42:10Z",
+  "tags_applied": {
+    "Project": "CGA",
+    "Env": "PDN"
+  },
+  "stack": "CloudGovernanceAgent",
+  "resources_tagged": [
+    "arn:aws:logs:us-east-1:062560094883:log-group:/aws/lambda/cloud-governance-agent",
+    "arn:aws:lambda:us-east-1:062560094883:function:cloud-governance-agent",
+    "arn:aws:sns:us-east-1:062560094883:cga-lambda-alarms",
+    "arn:aws:events:us-east-1:062560094883:rule/cga-weekly-schedule",
+    "arn:aws:s3:::cga-reports-062560094883",
+    "arn:aws:cloudwatch:us-east-1:062560094883:alarm:CGA-Lambda-Errors",
+    "arn:aws:iam::062560094883:role/cga-lambda-role"
+  ],
+  "resources_failed": [],
+  "total_tagged": 7,
+  "total_failed": 0,
+  "notes": [
+    "6 resources tagged via resourcegroupstaggingapi in a single batch call",
+    "IAM role 'cga-lambda-role' tagged separately via iam:TagRole (not supported by tagging API filter)",
+    "IAM inline policy 'CgaLambdaRoleDefaultPolicy51C82731' is not taggable (inline policies don't support tags)",
+    "AWS-managed policy 'AWSLambdaBasicExecutionRole' is not taggable (AWS-owned resource)",
+    "AWS::Lambda::Permission (CgaScheduleRule permission) is not taggable (Lambda permissions don't support tags)",
+    "AWS::CDK::Metadata and AWS::S3::BucketPolicy are not independently taggable resource types",
+    "All taggable resources verified via GetResources with filter Project=CGA"
+  ]
+}
