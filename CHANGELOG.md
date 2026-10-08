@@ -7,6 +7,26 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [Unreleased] - 2026-10-08
+
+### Added
+- Política de tagging multi-proyecto (`docs/tagging-policy.md`): lineamientos obligatorios con tags `Project`, `Env`, `Owner`, `CostCenter`, `ManagedBy` para separar proyectos en la cuenta AWS productiva
+- Steering file `aws-tagging-policy.md` y hook `cdk-tagging-enforcer` en `.kiro/` para enforcement automático de tags al crear recursos con Kiro
+- Documentación de optimización de costos (`docs/cost-optimization-2026-10-08.md`) con análisis detallado y acciones realizadas
+
+### Changed
+- `infrastructure/app.py`: agregados 6 tags obligatorios (`Project`, `Env`, `Owner`, `CostCenter`, `ManagedBy`, `CreatedBy`) que se aplican automáticamente a todos los recursos CDK del proyecto CGA
+
+### Fixed
+- Eliminado log group huérfano de 2 KB del stack `CGA-Sample-Frontend` que quedó sin dueño tras eliminación de stacks demo
+
+### Operations (2026-10-08)
+- **Optimización de costos**: Eliminados 6 stacks demo `CGA-Sample-*` (Compute, Database, Frontend, IAM, Network, Storage) que generaban ~$167/mes (77% por 2 instancias RDS t3.micro). Costo reducido a <$1/mes (~99% de ahorro, ~$2,000/año)
+- **Tagging de recursos**: Aplicados tags `Project=CGA` y `Env=PDN` a 7 recursos del stack `CloudGovernanceAgent` (Lambda, DynamoDB, S3, EventBridge, Log Groups, IAM Role)
+- **Verificación de aislamiento**: Confirmado que el stack `CloudGovernanceAgent` está correctamente aislado mediante tags y puede coexistir con otros proyectos en la misma cuenta AWS
+
+---
+
 ## [Unreleased]
 
 ### Removed

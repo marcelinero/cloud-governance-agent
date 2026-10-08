@@ -346,6 +346,29 @@ Reporte completo en [`docs/sample-report/report-example.json`](docs/sample-repor
 
 ---
 
+## Operational History
+
+### 2026-10-08 — Cost Optimization & Tagging Policy
+
+| Item | Detail |
+|------|--------|
+| **Cost before** | ~$167/month (6 demo stacks active) |
+| **Cost after** | <$1/month (demo stacks removed) |
+| **Annual savings** | ~$2,000/year (~99% reduction) |
+| **Resources tagged** | 7 resources with `Project=CGA`, `Env=PDN` |
+| **Tagging policy** | [`docs/tagging-policy.md`](docs/tagging-policy.md) |
+| **Cost analysis** | [`docs/cost-optimization-2026-10-08.md`](docs/cost-optimization-2026-10-08.md) |
+
+**Actions taken:**
+- Removed 6 demo stacks (`CGA-Sample-Compute`, `CGA-Sample-Database`, `CGA-Sample-Frontend`, `CGA-Sample-IAM`, `CGA-Sample-Network`, `CGA-Sample-Storage`)
+- Tagged all `CloudGovernanceAgent` stack resources with `Project=CGA` and `Env=PDN`
+- Created multi-project tagging policy for future project isolation on shared AWS account
+- Updated `infrastructure/app.py` with 6 mandatory CDK tags applied automatically to all resources
+- Configured Kiro automation (steering file + hook) for tag enforcement at resource creation time
+- Deleted orphaned 2 KB log group from `CGA-Sample-Frontend` stack
+
+---
+
 ## Contribución
 
 Las contribuciones son bienvenidas. Lee [CONTRIBUTING.md](CONTRIBUTING.md) para el proceso de pull requests y estándares de código.
