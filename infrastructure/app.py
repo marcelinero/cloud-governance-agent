@@ -12,15 +12,19 @@ app = cdk.App()
 account = app.node.try_get_context("account")
 region  = app.node.try_get_context("region") or "us-east-1"
 
-CGAStack(
+stack = CGAStack(
     app,
     "CloudGovernanceAgent",
     env=cdk.Environment(account=account, region=region),
     description="Cloud Governance Agent — Auditoría continua, seguridad y FinOps para AWS",
 )
 
-cdk.Tags.of(app).add("ManagedBy",  "CDK")
-cdk.Tags.of(app).add("Project",    "cloud-governance-agent")
-cdk.Tags.of(app).add("Repository", "github.com/marcelinero/cloud-governance-agent")
+# Tags obligatorios — se propagan a TODOS los recursos del stack
+cdk.Tags.of(stack).add("Project",    "CGA")
+cdk.Tags.of(stack).add("Env",        "PDN")
+cdk.Tags.of(stack).add("Owner",      "CloudOps")
+cdk.Tags.of(stack).add("CostCenter", "CGA-PDN")
+cdk.Tags.of(stack).add("ManagedBy",  "CDK")
+cdk.Tags.of(stack).add("Repository", "github.com/marcelinero/cloud-governance-agent")
 
 app.synth()
