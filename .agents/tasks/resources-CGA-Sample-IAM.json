@@ -1,0 +1,112 @@
+{
+    "StackResources": [
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "CDKMetadata",
+            "PhysicalResourceId": "de952050-ab04-11f1-8d95-0affe682e87b",
+            "ResourceType": "AWS::CDK::Metadata",
+            "Timestamp": "2026-09-07T21:41:32.717000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "DevGroup61842E99",
+            "PhysicalResourceId": "developers",
+            "ResourceType": "AWS::IAM::Group",
+            "Timestamp": "2026-09-07T21:42:09.894000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "PolicyPermissive5916FB15",
+            "PhysicalResourceId": "CGA-S-Polic-BzAswxfPd3Rq",
+            "ResourceType": "AWS::IAM::Policy",
+            "Timestamp": "2026-09-07T21:41:58.174000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "UserAdminDirect7261E0D5",
+            "PhysicalResourceId": "iam-user-dev-admin",
+            "ResourceType": "AWS::IAM::User",
+            "Timestamp": "2026-09-07T21:42:10.784000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "UserInactive726643FE",
+            "PhysicalResourceId": "iam-user-ex-employee",
+            "ResourceType": "AWS::IAM::User",
+            "Timestamp": "2026-09-07T21:42:48.242000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "UserNoMfa1723E96A",
+            "PhysicalResourceId": "iam-user-no-mfa",
+            "ResourceType": "AWS::IAM::User",
+            "Timestamp": "2026-09-07T21:42:48.345000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "UserOldKeyAccessKey",
+            "PhysicalResourceId": "AKIAQ5EG7JKR567ZQUHM",
+            "ResourceType": "AWS::IAM::AccessKey",
+            "Timestamp": "2026-09-07T21:42:49.138000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "UserOldKeyC576BC6B",
+            "PhysicalResourceId": "iam-user-svc-integration",
+            "ResourceType": "AWS::IAM::User",
+            "Timestamp": "2026-09-07T21:42:48.276000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-IAM",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-IAM/de952050-ab04-11f1-8d95-0affe682e87b",
+            "LogicalResourceId": "UserPermissive8EDEE1AA",
+            "PhysicalResourceId": "iam-user-emergency",
+            "ResourceType": "AWS::IAM::User",
+            "Timestamp": "2026-09-07T21:42:09.765000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        }
+    ]
+}

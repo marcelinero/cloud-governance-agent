@@ -1,0 +1,112 @@
+{
+    "StackResources": [
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "BucketAccessLogs082E23D6",
+            "PhysicalResourceId": "cga-sample-storage-bucketaccesslogs082e23d6-w2r2ofj0zvec",
+            "ResourceType": "AWS::S3::Bucket",
+            "Timestamp": "2026-09-07T21:54:27.263000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "BucketAccessLogsPolicy8FC20C52",
+            "PhysicalResourceId": "cga-sample-storage-bucketaccesslogs082e23d6-w2r2ofj0zvec",
+            "ResourceType": "AWS::S3::BucketPolicy",
+            "Timestamp": "2026-09-07T21:54:29.740000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "BucketArchive22C6E156",
+            "PhysicalResourceId": "cga-sample-storage-bucketarchive22c6e156-jxnqiurd8teb",
+            "ResourceType": "AWS::S3::Bucket",
+            "Timestamp": "2026-09-07T21:54:27.181000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "BucketArchivePolicy87A924B9",
+            "PhysicalResourceId": "cga-sample-storage-bucketarchive22c6e156-jxnqiurd8teb",
+            "ResourceType": "AWS::S3::BucketPolicy",
+            "Timestamp": "2026-09-07T21:54:29.521000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "BucketNoLogsC5CEDEBA",
+            "PhysicalResourceId": "cga-sample-storage-bucketnologsc5cedeba-x57vvv2qjelc",
+            "ResourceType": "AWS::S3::Bucket",
+            "Timestamp": "2026-09-07T21:54:27.356000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "BucketNoLogsPolicy07CDD477",
+            "PhysicalResourceId": "cga-sample-storage-bucketnologsc5cedeba-x57vvv2qjelc",
+            "ResourceType": "AWS::S3::BucketPolicy",
+            "Timestamp": "2026-09-07T21:54:30.179000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "BucketPublic02D45353",
+            "PhysicalResourceId": "cga-sample-storage-bucketpublic02d45353-4qvutigzub5n",
+            "ResourceType": "AWS::S3::Bucket",
+            "Timestamp": "2026-09-07T21:54:28.410000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "CDKMetadata",
+            "PhysicalResourceId": "a3060430-ab06-11f1-8000-0e1239767b57",
+            "ResourceType": "AWS::CDK::Metadata",
+            "Timestamp": "2026-09-07T21:54:14.062000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Storage",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Storage/a3060430-ab06-11f1-8000-0e1239767b57",
+            "LogicalResourceId": "EbsOrphan",
+            "PhysicalResourceId": "vol-0a9a460f93268004f",
+            "ResourceType": "AWS::EC2::Volume",
+            "Timestamp": "2026-09-07T21:54:20.594000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        }
+    ]
+}

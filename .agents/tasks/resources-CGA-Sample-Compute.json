@@ -1,0 +1,172 @@
+{
+    "StackResources": [
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "CDKMetadata",
+            "PhysicalResourceId": "31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "ResourceType": "AWS::CDK::Metadata",
+            "Timestamp": "2026-09-07T22:05:21.705000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2NoTags2208BA76",
+            "PhysicalResourceId": "i-076b75d85f6a96141",
+            "ResourceType": "AWS::EC2::Instance",
+            "Timestamp": "2026-09-07T22:08:10.030000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2NoTagsInstanceProfile02D162EF",
+            "PhysicalResourceId": "CGA-Sample-Compute-Ec2NoTagsInstanceProfile02D162EF-75ZQMx0OtxvX",
+            "ResourceType": "AWS::IAM::InstanceProfile",
+            "Timestamp": "2026-09-07T22:07:55.655000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2NoTagsInstanceRole33ECF74F",
+            "PhysicalResourceId": "CGA-Sample-Compute-Ec2NoTagsInstanceRole33ECF74F-kUBE5J0VFczK",
+            "ResourceType": "AWS::IAM::Role",
+            "Timestamp": "2026-09-07T22:05:39.001000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2OversizedD0494D94",
+            "PhysicalResourceId": "i-0080cd765d651a620",
+            "ResourceType": "AWS::EC2::Instance",
+            "Timestamp": "2026-09-07T22:08:09.065000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2OversizedInstanceProfile604FBAE3",
+            "PhysicalResourceId": "CGA-Sample-Compute-Ec2OversizedInstanceProfile604FBAE3-gtK8GNuHpaTL",
+            "ResourceType": "AWS::IAM::InstanceProfile",
+            "Timestamp": "2026-09-07T22:07:54.758000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2OversizedInstanceRole8741F262",
+            "PhysicalResourceId": "CGA-Sample-Compute-Ec2OversizedInstanceRole8741F262-rl0RpkDHkL4i",
+            "ResourceType": "AWS::IAM::Role",
+            "Timestamp": "2026-09-07T22:05:37.771000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2StoppedE6A6593A",
+            "PhysicalResourceId": "i-08f1e0f572fb7dd80",
+            "ResourceType": "AWS::EC2::Instance",
+            "Timestamp": "2026-09-07T22:08:04.576000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2StoppedInstanceProfile0C0B04F2",
+            "PhysicalResourceId": "CGA-Sample-Compute-Ec2StoppedInstanceProfile0C0B04F2-E1QLRVsMpfxh",
+            "ResourceType": "AWS::IAM::InstanceProfile",
+            "Timestamp": "2026-09-07T22:07:49.924000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "Ec2StoppedInstanceRole29DC83C0",
+            "PhysicalResourceId": "CGA-Sample-Compute-Ec2StoppedInstanceRole29DC83C0-em904mQngyVS",
+            "ResourceType": "AWS::IAM::Role",
+            "Timestamp": "2026-09-07T22:05:37.819000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "FnLegacyBF6153D6",
+            "PhysicalResourceId": "fn-legacy-webhook",
+            "ResourceType": "AWS::Lambda::Function",
+            "Timestamp": "2026-09-07T22:05:48.015000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "FnLegacyServiceRole11923054",
+            "PhysicalResourceId": "CGA-Sample-Compute-FnLegacyServiceRole11923054-2aaqHRNhvPwp",
+            "ResourceType": "AWS::IAM::Role",
+            "Timestamp": "2026-09-07T22:05:38.301000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "FnUnused20D4C174",
+            "PhysicalResourceId": "fn-unused-processor",
+            "ResourceType": "AWS::Lambda::Function",
+            "Timestamp": "2026-09-07T22:05:48.686000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Compute",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Compute/31dfe1c0-ab08-11f1-8954-0e447ebf1a8f",
+            "LogicalResourceId": "FnUnusedServiceRoleCD63E439",
+            "PhysicalResourceId": "CGA-Sample-Compute-FnUnusedServiceRoleCD63E439-MZr44OC9EFpd",
+            "ResourceType": "AWS::IAM::Role",
+            "Timestamp": "2026-09-07T22:05:38.905000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        }
+    ]
+}

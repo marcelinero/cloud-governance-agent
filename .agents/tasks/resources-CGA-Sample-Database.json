@@ -1,0 +1,124 @@
+{
+    "StackResources": [
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "CDKMetadata",
+            "PhysicalResourceId": "1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "ResourceType": "AWS::CDK::Metadata",
+            "Timestamp": "2026-09-07T21:57:41.138000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "CGASampleDatabaseRdsPublicMysqlSecretADDE8B383fdaad7efa858a3daf9490cf0a702aeb",
+            "PhysicalResourceId": "arn:aws:secretsmanager:us-east-1:062560094883:secret:CGASampleDatabaseRdsPublicM-5vrGUHOPc1XD-9Mn5yU",
+            "ResourceType": "AWS::SecretsManager::Secret",
+            "Timestamp": "2026-09-07T21:57:41.738000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "CGASampleDatabaseRdsStoppedPostgresSecret42826FAC3fdaad7efa858a3daf9490cf0a702aeb",
+            "PhysicalResourceId": "arn:aws:secretsmanager:us-east-1:062560094883:secret:CGASampleDatabaseRdsStopped-roz4xdSPyB1U-NKR0G2",
+            "ResourceType": "AWS::SecretsManager::Secret",
+            "Timestamp": "2026-09-07T21:57:43.199000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "RdsPublicMysql526504E2",
+            "PhysicalResourceId": "cga-sample-database-rdspublicmysql526504e2-wvmsqbni2jdv",
+            "ResourceType": "AWS::RDS::DBInstance",
+            "Timestamp": "2026-09-07T22:04:24.315000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "RdsPublicMysqlSecretAttachment3BEB7477",
+            "PhysicalResourceId": "arn:aws:secretsmanager:us-east-1:062560094883:secret:CGASampleDatabaseRdsPublicM-5vrGUHOPc1XD-9Mn5yU",
+            "ResourceType": "AWS::SecretsManager::SecretTargetAttachment",
+            "Timestamp": "2026-09-07T22:04:26.371000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "RdsPublicMysqlSubnetGroupCA76B4D4",
+            "PhysicalResourceId": "cga-sample-database-rdspublicmysqlsubnetgroupca76b4d4-zincwolvdcqj",
+            "ResourceType": "AWS::RDS::DBSubnetGroup",
+            "Timestamp": "2026-09-07T21:57:43.579000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "RdsStoppedPostgres93B05D34",
+            "PhysicalResourceId": "cga-sample-database-rdsstoppedpostgres93b05d34-n4by6cuc4tq0",
+            "ResourceType": "AWS::RDS::DBInstance",
+            "Timestamp": "2026-09-07T22:03:54.496000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "RdsStoppedPostgresSecretAttachment2C162547",
+            "PhysicalResourceId": "arn:aws:secretsmanager:us-east-1:062560094883:secret:CGASampleDatabaseRdsStopped-roz4xdSPyB1U-NKR0G2",
+            "ResourceType": "AWS::SecretsManager::SecretTargetAttachment",
+            "Timestamp": "2026-09-07T22:03:56.685000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "RdsStoppedPostgresSubnetGroupDE6996E0",
+            "PhysicalResourceId": "cga-sample-database-rdsstoppedpostgressubnetgroupde6996e0-s07svbhybsdw",
+            "ResourceType": "AWS::RDS::DBSubnetGroup",
+            "Timestamp": "2026-09-07T21:57:43.701000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "CGA-Sample-Database",
+            "StackId": "arn:aws:cloudformation:us-east-1:062560094883:stack/CGA-Sample-Database/1f8ea980-ab07-11f1-a384-0afff3638a3b",
+            "LogicalResourceId": "TblInactiveBEB3D936",
+            "PhysicalResourceId": "tbl-inactive-sessions",
+            "ResourceType": "AWS::DynamoDB::Table",
+            "Timestamp": "2026-09-07T21:57:54.232000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        }
+    ]
+}
