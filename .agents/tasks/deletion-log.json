@@ -75,5 +75,16 @@
     "failed": 0,
     "total_duration_seconds": 775,
     "remaining_stacks_after_deletion": ["CloudGovernanceAgent", "CDKToolkit"]
-  }
+  },
+  "post_deletion_cleanup": [
+    {
+      "timestamp": "2026-10-08T16:30:00-05:00",
+      "action": "delete-log-group",
+      "resource": "/aws/lambda/CGA-Sample-Frontend-CustomS3AutoDeleteObjectsCusto-p4HUh6zFaxaS",
+      "stored_bytes": 2131,
+      "reason": "Orphaned log group from deleted stack CGA-Sample-Frontend",
+      "status": "deleted",
+      "verification": "DescribeLogGroups with pattern 'CGA' returns 0 results after deletion"
+    }
+  ]
 }
