@@ -1,0 +1,79 @@
+{
+  "deletion_run": {
+    "initiated_by": "workflow-step",
+    "account_region": "us-east-1",
+    "run_date": "2026-10-08",
+    "pre_deletion_note": "CloudFront distributions EY7V9BY6D9983 and E3E9JWI4UVRF7D were disabled before Frontend stack deletion to avoid 'distribution not disabled' error. Both reached Deployed/Enabled=false status before stack delete was initiated.",
+    "protected_stacks": ["CloudGovernanceAgent", "CDKToolkit"]
+  },
+  "stacks": [
+    {
+      "name": "CGA-Sample-Compute",
+      "order": 1,
+      "delete_initiated": "2026-10-08T10:45:20-05:00",
+      "delete_completed": "2026-10-08T10:46:27-05:00",
+      "duration_seconds": 67,
+      "status": "SUCCESS",
+      "error": null,
+      "verification": "ValidationError: Stack with id CGA-Sample-Compute does not exist (confirmed deleted)"
+    },
+    {
+      "name": "CGA-Sample-Database",
+      "order": 2,
+      "delete_initiated": "2026-10-08T10:46:34-05:00",
+      "delete_completed": "2026-10-08T10:53:46-05:00",
+      "duration_seconds": 432,
+      "status": "SUCCESS",
+      "error": null,
+      "verification": "ValidationError: Stack with id CGA-Sample-Database does not exist (confirmed deleted)"
+    },
+    {
+      "name": "CGA-Sample-Frontend",
+      "order": 3,
+      "delete_initiated": "2026-10-08T10:53:57-05:00",
+      "delete_completed": "2026-10-08T10:54:33-05:00",
+      "duration_seconds": 36,
+      "status": "SUCCESS",
+      "error": null,
+      "pre_action": "Disabled CloudFront distributions EY7V9BY6D9983 and E3E9JWI4UVRF7D before stack deletion",
+      "verification": "ValidationError: Stack with id CGA-Sample-Frontend does not exist (confirmed deleted)"
+    },
+    {
+      "name": "CGA-Sample-Storage",
+      "order": 4,
+      "delete_initiated": "2026-10-08T10:54:40-05:00",
+      "delete_completed": "2026-10-08T10:55:16-05:00",
+      "duration_seconds": 36,
+      "status": "SUCCESS",
+      "error": null,
+      "verification": "ValidationError: Stack with id CGA-Sample-Storage does not exist (confirmed deleted)"
+    },
+    {
+      "name": "CGA-Sample-Network",
+      "order": 5,
+      "delete_initiated": "2026-10-08T10:55:23-05:00",
+      "delete_completed": "2026-10-08T10:57:00-05:00",
+      "duration_seconds": 97,
+      "status": "SUCCESS",
+      "error": null,
+      "verification": "ValidationError: Stack with id CGA-Sample-Network does not exist (confirmed deleted)"
+    },
+    {
+      "name": "CGA-Sample-IAM",
+      "order": 6,
+      "delete_initiated": "2026-10-08T10:57:06-05:00",
+      "delete_completed": "2026-10-08T10:58:13-05:00",
+      "duration_seconds": 67,
+      "status": "SUCCESS",
+      "error": null,
+      "verification": "ValidationError: Stack with id CGA-Sample-IAM does not exist (confirmed deleted)"
+    }
+  ],
+  "summary": {
+    "total_stacks": 6,
+    "succeeded": 6,
+    "failed": 0,
+    "total_duration_seconds": 775,
+    "remaining_stacks_after_deletion": ["CloudGovernanceAgent", "CDKToolkit"]
+  }
+}
